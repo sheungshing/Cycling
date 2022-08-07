@@ -1,6 +1,6 @@
 # Cycling\
 
-##create a new repository on the command line
+##create a new repository on the command line  
 echo "# Cycling" >> README.md  
 git init  
 git add README.md  
