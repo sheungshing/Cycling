@@ -13,11 +13,8 @@ import {
   Platform
 } from 'react-native';
 import Geolocation from '@react-native-community/geolocation';
-
 import Router from './src/Navigation/Router'
-import SearchResult from './src/screens/SearchResult'
-// import HomeScreen from './src/screens/HomeScreen';
-// import DestinationSearch from './src/screens/DestinationSearch';
+
 
 
 navigator.geolocation = require('@react-native-community/geolocation');
