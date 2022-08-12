@@ -3,6 +3,7 @@ import { View, Text, Image, FlatList, useWindowDimensions } from "react-native";
 import MapView, { Marker } from 'react-native-maps';
 import CrimeMarker from "../CrimeMarker";
 import PostCarousel from "../PostCarousel";
+import RNLocation from 'react-native-location';
 
 
 
@@ -11,6 +12,14 @@ import places from '../../Assets/data/feed'
 import AntDesign from 'react-native-vector-icons/AntDesign'
 
 const InfoMap = () => {
+
+    let initialRegion = {
+        latitude: 22.417070,
+        longitude: 114.227140,
+        latitudeDelta: 0.0922,
+        longitudeDelta: 0.0421,
+      }
+    const [initRegion, setRegion] = useState(initialRegion);
 
     const [selectedPlaceId, setSelectedPlaceId] = useState();
 
@@ -25,11 +34,33 @@ const InfoMap = () => {
     })
 
     const width = useWindowDimensions().width;
-   
+
+
+    useEffect(() => {
+        RNLocation.getLatestLocation({ timeout: 60000 })
+          .then(latestLocation => {
+            console.log(latestLocation);
+            const setStartRegion = {
+              latitude: latestLocation.latitude,
+              longitude: latestLocation.longitude,
+              latitudeDelta: 0.0322,
+              longitudeDelta: 0.0421,
+            }
+    
+            setRegion(setStartRegion);
+            map.current.animateToRegion(setStartRegion);
+    
+          }).catch(err => {
+            console.log(err);
+    
+    
+          });
+      }, [])
 
 
     useEffect(() => {
         if (!selectedPlaceId || !flatlist) {
+            console.log("none to choose")
 
             return;
         }
@@ -44,9 +75,9 @@ const InfoMap = () => {
             longitudeDelta: 0.0421,
         }
         //console.warn(index);
-        
-            map.current.animateToRegion(region);
-        
+
+        map.current.animateToRegion(region);
+
 
 
 
@@ -54,6 +85,9 @@ const InfoMap = () => {
 
 
     }, [selectedPlaceId])
+
+
+
 
     return (
         <View >
@@ -65,12 +99,7 @@ const InfoMap = () => {
                 showsMyLocationButton={true}
                 zoomControlEnabled={false}
                 showsTraffic={false}
-                initialRegion={{
-                    latitude: 22.417070,
-                    longitude: 114.227140,
-                    latitudeDelta: 0.0922,
-                    longitudeDelta: 0.0421,
-                }}
+                initialRegion={initRegion}
             >
                 {/* Crime Information Marker */}
                 {places.map((place) => (

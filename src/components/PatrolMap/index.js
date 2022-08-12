@@ -7,10 +7,19 @@ import MapView, { Circle, Geojson, Marker } from 'react-native-maps';
 import RouteLine from "../RouteLine";
 import PostCarousel from "../PostCarousel";
 import RouteCarousel from "../RouteCarousel";
+import RNLocation from 'react-native-location';
 
 
 
 const PatrolMap = () => {
+
+  let initialRegion = {
+    latitude: 22.417070,
+    longitude: 114.227140,
+    latitudeDelta: 0.0922,
+    longitudeDelta: 0.0421,
+  }
+const [initRegion, setRegion] = useState(initialRegion);
 
   const width = useWindowDimensions().width;
 
@@ -26,6 +35,29 @@ const PatrolMap = () => {
       setSelectedRouteId(selectedRoute.id)
     }
   })
+
+  
+  useEffect(() => {
+    RNLocation.getLatestLocation({ timeout: 60000 })
+      .then(latestLocation => {
+        console.log(latestLocation);
+        const setStartRegion = {
+          latitude: latestLocation.latitude,
+          longitude: latestLocation.longitude,
+          latitudeDelta: 0.0322,
+          longitudeDelta: 0.0421,
+        }
+
+        setRegion(setStartRegion);
+        map.current.animateToRegion(setStartRegion);
+
+      }).catch(err => {
+        console.log(err);
+
+
+      });
+  }, [])
+
 
   useEffect(() => {
     if (!selectedRouteId || !flatlist) {
@@ -59,12 +91,7 @@ const PatrolMap = () => {
         showsMyLocationButton={true}
         zoomControlEnabled={false}
         showsTraffic={false}
-        initialRegion={{
-          latitude: 22.423929,
-          longitude: 114.212952,
-          latitudeDelta: 0.0922,
-          longitudeDelta: 0.0421,
-        }}>
+        initialRegion={initRegion}>
 
         {routes.map((route) => {
           return (

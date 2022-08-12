@@ -14,6 +14,7 @@ const HomeMap = () => {
             showsMyLocationButton={true}
             zoomControlEnabled={true}
             showsTraffic={false}
+        
             initialRegion={{
                 latitude: 22.423929,
                 longitude: 114.212952,

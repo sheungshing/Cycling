@@ -31,26 +31,25 @@ const RouteCarousel = (props) => {
         {/* <Text style={styles.placeName}>
           <Text>PlaceName:</Text>
         </Text> */}
-        <View style={{ marginHorizontal: 8  }}>
+        <View style={{ flex: 1,marginHorizontal: 8  }}>
           <Text style={styles.location}>
             <Text> {post.division}</Text>
           </Text>
 
-
           <Text >
             {post.routeName}
           </Text>
+
           <Text >
             Distance:{post.distance}km
           </Text>
 
-          <View style={styles.button}>
+          {/* <View style={styles.button}>
             <Button
               title='Start'
              
             />
-          </View>
-
+          </View> */}
 
           {/* <Text style={styles.description} >
           <Text>Detail Description: {post.description}</Text>

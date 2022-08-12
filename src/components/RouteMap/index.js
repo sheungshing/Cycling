@@ -5,9 +5,18 @@ import MapViewDirections from "react-native-maps-directions";
 
 const GOOGLE_MAPS_APIKEY = 'AIzaSyANR3h2G1QwhlFCTlyEvR_gDeQNOJcLeCU';
 
-const RouteMap = () => {
-    const origin = { latitude: 22.417070, longitude: 114.227140 };
-    const destination = { latitude: 22.427769, longitude: 114.210288 };
+const RouteMap = ({ origin, destination }) => {
+
+    // console.log(origin)
+    // const originLoc = {
+    //     latitude: origin.details.geometry.location.lat,
+    //     longitude: origin.details.geometry.location.lng,
+    //   };
+    
+    //   const destinationLoc = {
+    //     latitude: destination.details.geometry.location.lat,
+    //     longitude: destination.details.geometry.location.lng,
+    //   };
 
     return (
 
@@ -20,24 +29,24 @@ const RouteMap = () => {
                 longitudeDelta: 0.0421,
             }}
         >
-            <MapViewDirections
-                origin={origin}
-                destination={destination}
+            {/* <MapViewDirections
+                origin={originLoc}
+                destination={destinationLoc}
                 apikey={GOOGLE_MAPS_APIKEY}
                 strokeWidth={3}
                 strokeColor="hotpink"
                 // mode="BICYCLING"
                //timePrecision="now"
-            />
+            /> */}
             <Marker  
                 coordinate={{ latitude: 22.417070, longitude: 114.227140 }}
-                title={"Ma On Shan"}
+               
                 >
             </Marker>
 
             <Marker  
                 coordinate={{ latitude: 22.427769, longitude: 114.210288 }}
-                title={"Science Park"}
+                
                 >
             </Marker>
 

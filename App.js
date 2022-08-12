@@ -13,18 +13,16 @@ import {
   Platform
 } from 'react-native';
 import Geolocation from '@react-native-community/geolocation';
-
 import Router from './src/Navigation/Router'
-import SearchResult from './src/screens/SearchResult'
-// import HomeScreen from './src/screens/HomeScreen';
-// import DestinationSearch from './src/screens/DestinationSearch';
+
+
 
 
 navigator.geolocation = require('@react-native-community/geolocation');
 
 const App = () => {
   // request location premission 
-  const  androidPremission = async ()=>{
+  const androidPremission = async () => {
     try {
       const granted = await PermissionsAndroid.request(
         PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
@@ -44,10 +42,37 @@ const App = () => {
     }
   }
 
-  useEffect(()=>{
-    if(Platform.OS ==='android'){
+  const androidPremission2 = async () => {
+
+    try {
+
+      const backgroundgranted = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.ACCESS_BACKGROUND_LOCATION,
+        {
+          title: 'Background Location Permission',
+          message:
+            'We need access to your location ' +
+            'so you can get live quality updates.',
+          buttonNeutral: 'Ask Me Later',
+          buttonNegative: 'Cancel',
+          buttonPositive: 'OK',
+        },
+      );
+      if (backgroundgranted === PermissionsAndroid.RESULTS.GRANTED) {
+        
+        console.log("getbackground location")
+      }
+    } catch (err) {
+      console.log(err);
+    }
+
+  }
+
+  useEffect(() => {
+    if (Platform.OS === 'android') {
        androidPremission();
-    }else{ 
+      androidPremission2();
+    } else {
       //for IOS
       Geolocation.requestAuthorization();
     }
@@ -55,7 +80,7 @@ const App = () => {
 
   return (
     <>
-    <Router/>
+      <Router />
     </>
   );
 };
