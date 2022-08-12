@@ -1,34 +1,12 @@
 export default [
+    
     {
         id: 0,
-        division: 'Sha Tin',
-        routeName: 'Bicycle Route A',
-        strokeColor: 'blue',
-        distance: 13.4,
-        image: 'https://www.etestware.com/wp-content/uploads/2020/08/shutterstock_515285995-1200x580.jpg',
-        coordinate: {
-            latitude: 22.386977,
-            longitude: 114.192513,
-        },
-        geojson: {
-            "type": "FeatureCollection",
-            "name": "Shatin Division - Bicycle Route A",
-            "crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
-            "features": [
-                { "type": "Feature", "properties": { "Name": "Line 2", "description": null, "tessellate": 1 }, "geometry": { "type": "LineString", "coordinates": [[114.1919761, 22.3869019], [114.1915147, 22.38714], [114.1932206, 22.3887768], [114.1953986, 22.3903938], [114.1966646, 22.3907608], [114.197083, 22.3907806], [114.1980486, 22.3891438], [114.1981237, 22.3889851]] } },
-                { "type": "Feature", "properties": { "Name": "Line 3", "description": null, "tessellate": 1 }, "geometry": { "type": "LineString", "coordinates": [[114.1981237, 22.3889851], [114.1991497, 22.3894254], [114.1997505, 22.3896635], [114.2002012, 22.3900404], [114.2004157, 22.3904968], [114.2008878, 22.3911118], [114.2012526, 22.3914094], [114.2021538, 22.3922228], [114.2052652, 22.3953178], [114.2075182, 22.3977382], [114.2085911, 22.3988293], [114.2095931, 22.3999278]] } },
-                { "type": "Feature", "properties": { "Name": "Line 3", "description": null, "tessellate": 1 }, "geometry": { "type": "LineString", "coordinates": [[114.2095931, 22.3999278], [114.2116836, 22.4020954], [114.2127351, 22.4032262], [114.2129497, 22.4034444], [114.2143873, 22.4021152], [114.213293, 22.4009249], [114.2125634, 22.4000124], [114.2111687, 22.398088], [114.2100314, 22.3962628], [114.2097739, 22.3962231], [114.2092589, 22.3965803], [114.2062978, 22.3937829]] } },
-                { "type": "Feature", "properties": { "Name": "Line 4", "description": null, "tessellate": 1 }, "geometry": { "type": "LineString", "coordinates": [[114.2062978, 22.3937829], [114.204769, 22.3921005], [114.2041253, 22.3913069], [114.2041682, 22.3900967], [114.2044257, 22.3896999], [114.2031812, 22.389184], [114.2022799, 22.3890848], [114.2006062, 22.3877357], [114.1998981, 22.3871207], [114.1982459, 22.3885293], [114.197083, 22.3907806]] } },
-            ]
-        }
-    },
-    {
-        id: 1,
         division: 'Tin Sam',
         routeName: 'Bicycle Route B',
         strokeColor: 'red',
         distance: 1,
-        image: '',
+        image: 'https://static02-proxy.hket.com/res/v3/image/content/2910000/2912137/KakaoTalk0915A_1024_1024.jpg',
         coordinate: {
             latitude: 22.367509,
             longitude: 114.179178
@@ -240,12 +218,12 @@ export default [
 
     },
     {
-        id: 2,
+        id: 1,
         division: 'Tin Sam',
         routeName: 'Bicycle Route A',
         strokeColor: 'red',
         distance: 13.4,
-        image: '',
+        image: 'https://static02-proxy.hket.com/res/v3/image/content/2910000/2912137/KakaoTalk0915A_1024_1024.jpg',
         coordinate: {
             latitude: 22.367509,
             longitude: 114.179178
@@ -606,12 +584,12 @@ export default [
 
     },
     {
-        id: 3,
+        id: 2,
         division: 'Tin Sam',
         routeName: 'Bicycle Route C',
         strokeColor: 'red',
         distance: 5,
-        image: '',
+        image: 'https://static02-proxy.hket.com/res/v3/image/content/2910000/2912137/KakaoTalk0915A_1024_1024.jpg',
         coordinate: {
             latitude: 22.367509,
             longitude: 114.179178
@@ -752,12 +730,12 @@ export default [
 
     },
     {
-        id: 4,
+        id: 3,
         division: 'Mo On Shan',
         routeName: 'Bicycle Patrol',
         strokeColor: 'green',
         distance: 9,
-        image: '',
+        image: 'https://mapio.net/images-p/55099358.jpg',
         coordinate: {
             latitude: 22.422102,
             longitude: 114.233152
@@ -3021,12 +2999,12 @@ export default [
 
     },
     {
-        id: 5,
+        id: 4,
         division: 'Sha Tin',
         routeName: 'Bicycle Route B',
         strokeColor: 'blue',
         distance: 0.4,
-        image: '',
+        image: 'https://cdn.hk01.com/di/media/images/dw/20210519/471654304269209600416972.jpeg/8PxRp8xgVusgVlFPafvmPAkragBudd8ZcCGPcnAhj3I?v=w1920r16_9',
         coordinate: {
             latitude: 22.386977,
             longitude: 114.192513,
@@ -3294,5 +3272,28 @@ export default [
             "type": "FeatureCollection"
         }
 
+    },
+    {
+        id: 5,
+        division: 'Sha Tin',
+        routeName: 'Bicycle Route A',
+        strokeColor: 'blue',
+        distance: 13.4,
+        image: 'https://cdn.hk01.com/di/media/images/dw/20210519/471654304269209600416972.jpeg/8PxRp8xgVusgVlFPafvmPAkragBudd8ZcCGPcnAhj3I?v=w1920r16_9',
+        coordinate: {
+            latitude: 22.386977,
+            longitude: 114.192513,
+        },
+        geojson: {
+            "type": "FeatureCollection",
+            "name": "Shatin Division - Bicycle Route A",
+            "crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+            "features": [
+                { "type": "Feature", "properties": { "Name": "Line 2", "description": null, "tessellate": 1 }, "geometry": { "type": "LineString", "coordinates": [[114.1919761, 22.3869019], [114.1915147, 22.38714], [114.1932206, 22.3887768], [114.1953986, 22.3903938], [114.1966646, 22.3907608], [114.197083, 22.3907806], [114.1980486, 22.3891438], [114.1981237, 22.3889851]] } },
+                { "type": "Feature", "properties": { "Name": "Line 3", "description": null, "tessellate": 1 }, "geometry": { "type": "LineString", "coordinates": [[114.1981237, 22.3889851], [114.1991497, 22.3894254], [114.1997505, 22.3896635], [114.2002012, 22.3900404], [114.2004157, 22.3904968], [114.2008878, 22.3911118], [114.2012526, 22.3914094], [114.2021538, 22.3922228], [114.2052652, 22.3953178], [114.2075182, 22.3977382], [114.2085911, 22.3988293], [114.2095931, 22.3999278]] } },
+                { "type": "Feature", "properties": { "Name": "Line 3", "description": null, "tessellate": 1 }, "geometry": { "type": "LineString", "coordinates": [[114.2095931, 22.3999278], [114.2116836, 22.4020954], [114.2127351, 22.4032262], [114.2129497, 22.4034444], [114.2143873, 22.4021152], [114.213293, 22.4009249], [114.2125634, 22.4000124], [114.2111687, 22.398088], [114.2100314, 22.3962628], [114.2097739, 22.3962231], [114.2092589, 22.3965803], [114.2062978, 22.3937829]] } },
+                { "type": "Feature", "properties": { "Name": "Line 4", "description": null, "tessellate": 1 }, "geometry": { "type": "LineString", "coordinates": [[114.2062978, 22.3937829], [114.204769, 22.3921005], [114.2041253, 22.3913069], [114.2041682, 22.3900967], [114.2044257, 22.3896999], [114.2031812, 22.389184], [114.2022799, 22.3890848], [114.2006062, 22.3877357], [114.1998981, 22.3871207], [114.1982459, 22.3885293], [114.197083, 22.3907806]] } },
+            ]
+        }
     },
 ]

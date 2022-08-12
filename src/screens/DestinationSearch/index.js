@@ -18,11 +18,21 @@ const DestinationSearch = () => {
 
     useEffect(() => {
         // console.warn(' use effect called!!!');
+        if(originalPlace && !destinationPlace){
+            console.log(originalPlace)
+        }
+        if(destinationPlace && !originalPlace){
+            console.log(destinationPlace)
+        }
+        
+
+
         if (originalPlace && destinationPlace) {
             // console.warn(' AND conditions called!!!');
             navigation.navigate('SearchResult' , {
                 originalPlace,
                 destinationPlace,
+                
             });
         }
     }, [originalPlace,destinationPlace]);
@@ -52,10 +62,12 @@ const DestinationSearch = () => {
                     query={{
                         key: 'AIzaSyANR3h2G1QwhlFCTlyEvR_gDeQNOJcLeCU',
                         language: 'en',
+                        components: 'country:hk'
                     }}
                     renderRow={(data) => <PlaceRow data={data} />}
                     currentLocation={true}
                     currentLocationLabel='Current location'
+                    fetchDetails={true}
                 />
 
 

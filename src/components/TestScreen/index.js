@@ -46,8 +46,10 @@ const TestScreen = () => {
   const [isStart, setStart] = useState(false);
   const [initRegion, setRegion] = useState(initialRegion);
 
+
   const map = useRef();
   const line = useRef();
+  const prevlng = useRef();
 
 
   const checkPermi = () => {
@@ -57,8 +59,6 @@ const TestScreen = () => {
   }
 
   const foregroundServiceStart = () => {
-
-
     ReactNativeForegroundService.start({
       id: 1,
       title: 'Foreground Service',
@@ -75,7 +75,14 @@ const TestScreen = () => {
               longitude: latestLocation['longitude'],
             }
             console.log(lng);
-            addLatLng((initLatLng) => [...initLatLng, lng])
+            addLatLng((initLatLng=> [...initLatLng, lng]))
+            // addLatLng((initLatLng) => {
+            //   if(initLatLng !==  lng){
+            //     console.log("not  equal")
+            //   }
+            //   initLatLng = [...initLatLng, lng];
+              
+            // })
           })
       },
       {
@@ -99,7 +106,7 @@ const TestScreen = () => {
     
   }
 
-
+//set the inital location
   useEffect(() => {
     RNLocation.getLatestLocation({ timeout: 60000 })
       .then(latestLocation => {
@@ -110,14 +117,11 @@ const TestScreen = () => {
           latitudeDelta: 0.0322,
           longitudeDelta: 0.0421,
         }
-
         setRegion(setStartRegion);
         map.current.animateToRegion(setStartRegion);
 
       }).catch(err => {
         console.log(err);
-
-
       });
   }, [])
 
@@ -126,11 +130,8 @@ const TestScreen = () => {
   useEffect(() => {
     if (!initLocation) {
       console.log("none action !!!!!!!")
-
       return;
     }
-
-
     // console.log(initLocation['latitude','longitude']);
     const region = {
       latitude: initLocation['latitude'],
@@ -138,11 +139,11 @@ const TestScreen = () => {
       latitudeDelta: 0.0121,
       longitudeDelta: 0.00821,
     }
-
+    // if(initLatLng.length() >= 1 ){
+    //   console.log("length > 2")
+    // }
     //console.log("-------------------------------------------------------")
-
     //console.log(initLatLng);
-
     //console.log(initLocation);
     map.current.animateToRegion(region);
   }, [initLatLng])
@@ -172,7 +173,7 @@ const TestScreen = () => {
         style={{ position: 'absolute' }}>
 
         <Button
-          title="hide"
+          title="Start"
           onPress={() => {
             checkPermi();
             foregroundServiceStart();
@@ -180,7 +181,7 @@ const TestScreen = () => {
           }}
         />
         <Button
-          title="show"
+          title="Stop"
           onPress={() => {
             foregroundServiceStop();
             clearDate();
