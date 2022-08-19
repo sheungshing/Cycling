@@ -2,8 +2,7 @@ import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import HomeScreen from '../screens/HomeScreen';
 import InfoTabNavigator from './InfoTabNavigator';
-import TextMap from '../components/TestMap';
-import TestScreen from '../components/TestScreen';
+import TrackingScreen from '../screens/TrackingScreen';
 
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import Feather from 'react-native-vector-icons/Feather';
@@ -40,11 +39,12 @@ const HomeTabNavigator = () => {
       />
       <Tab.Screen
         name={'Start'}
-        component={TestScreen}
+        component={TrackingScreen}
         options={{
           tabBarIcon: ({color}) => (
             <FontAwesome5 name="airbnb" size={25} color={color} />
           ),
+          headerShown: false,
         }}
       />
       <Tab.Screen
