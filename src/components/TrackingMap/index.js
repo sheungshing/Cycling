@@ -25,11 +25,14 @@ const TrackingMap = () => {
 
   const map = useRef();
 
+
   const [initalLocation, setinitalLocation] = useState();
   const [initLatLng, addLatLng] = useState([]);
   const [initLocation, updateLocation] = useState();
   const [initButton, setButton] = useState(false);
   const [initLockView, setLockView] = useState(false);
+  const [speed, setspeed] = useState('0'); 
+  const [distance, setDistance] = useState(0);
 
   const foregroundServiceStart = () => {
     ReactNativeForegroundService.start({
@@ -42,14 +45,18 @@ const TrackingMap = () => {
       () => {
         Geolocation.watchPosition(
           position => {
-            console.log(position);
+            //console.log(position);
             const tempPosition = {
               latitude: position.coords.latitude,
               longitude: position.coords.longitude,
             };
-
-            updateLocation(tempPosition);
+           
+        
+            updateLocation(position);
+            const speedStr = (position.coords.speed).toString();
+            setspeed(speedStr.substring(0,speedStr.length-(speedStr.length-5)))
             addLatLng(initLatLng => [...initLatLng, tempPosition]);
+           
             // updateLocation(previousPosition => (previousPosition,position));
           },
           error => {
@@ -74,14 +81,20 @@ const TrackingMap = () => {
   };
 
   const foregroundServiceStop = () => {
+    Geolocation.stopObserving();
+    addLatLng([]);
+    setspeed('0');
     ReactNativeForegroundService.remove_all_tasks();
     ReactNativeForegroundService.stop();
   };
 
   useEffect(() => {
+    //console.log(map.current.getCamera());
+
     Geolocation.getCurrentPosition(
       position => {
         // console.log(position);
+
         const setStartRegion = {
           latitude: position.coords.latitude,
           longitude: position.coords.longitude,
@@ -100,20 +113,30 @@ const TrackingMap = () => {
   }, []);
 
   useEffect(() => {
+    console.log(initLatLng)
     if (!initLocation) {
+      
       return;
     }
-    if (initLockView) {
+    if(initLatLng.length > 1){
+      console.log(  initLatLng[initLatLng.length-1])
+      
+    }
+   
+    if (initLockView && initButton) {
       const trackRegion = {
-        latitude: initLocation.latitude,
-        longitude: initLocation.longitude,
-        latitudeDelta: 0.0121,
-        longitudeDelta: 0.00821,
+        latitude: initLocation.coords.latitude,
+        longitude: initLocation.coords.longitude,
+        latitudeDelta: 0.00821,
+        longitudeDelta: 0.00521,
       };
       // console.log(trackRegion);
       map.current.animateToRegion(trackRegion);
+      
     }
   }, [initLocation]);
+
+   
 
   return (
     <View>
@@ -121,13 +144,31 @@ const TrackingMap = () => {
         ref={map}
         style={{width: '100%', height: '100%'}}
         showsUserLocation={true}
-        initialRegion={initialRegion}>
+        initialRegion={initialRegion}
+        followsUserLocation={true}
+        userLocationFastestInterval={500}
+        userLocationUpdateInterval={1000}
+        showsMyLocationButton={false}>
         <Polyline
           coordinates={initLatLng}
           strokeColor="red" // fallback for when `strokeColors` is not supported by the map-provider
           strokeWidth={3}
         />
       </MapView>
+
+      <View style={styles.dashBoardContainer}>
+        <View style={styles.dashBoardCol}>
+          <View style={styles.dashBoardRow}>
+            <Text style={styles.dataStyle}>Time: </Text>
+            <Text style={styles.dataStyle}>Speed:{'\n'}{speed} km/h </Text>
+          </View>
+          <View style={[styles.dashBoardRow, {paddingTop: 10}]}>
+            <Text style={styles.dataStyle}>Distance:{} km </Text>
+            <Text style={styles.dataStyle}>Weather: {}°C </Text>
+          </View>
+        </View>
+      </View>
+
       {initButton ? (
         <View style={styles.tracktButton}>
           <Button
@@ -135,7 +176,7 @@ const TrackingMap = () => {
             title="Stop"
             onPress={() => {
               foregroundServiceStop();
-              addLatLng([]);
+            
               setButton(false);
             }}
           />
@@ -154,11 +195,11 @@ const TrackingMap = () => {
 
       {initLockView ? (
         <View style={styles.lockButton}>
-          <Button color='red' title="LockView" onPress={() => setLockView(false)} />
+          <Button color="red" title="Lock" onPress={() => setLockView(false)} />
         </View>
       ) : (
         <View style={styles.lockButton}>
-          <Button title="LockView" onPress={() => setLockView(true)} />
+          <Button title="Lock" onPress={() => setLockView(true)} />
         </View>
       )}
     </View>
@@ -170,20 +211,49 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
+  },
+  dashBoardContainer: {
+    position: 'absolute',
+    width: '95%',
+    height: '15%',
     justifyContent: 'center',
+    backgroundColor: 'rgba(255,255,255,0.75 )',
+    borderRadius: 20,
+    top: '1%',
+    alignSelf: 'center',
+  },
+  dashBoardRow: {
+    flexDirection: 'row',
+
+    justifyContent: 'space-around',
+  },
+  dashBoardCol: {
+    flexDirection: 'column',
+  },
+  dataStyle: {
+    fontSize: 20,
+    width: '40%',
   },
   tracktButton: {
     position: 'absolute',
     justifyContent: 'center',
     width: '70%',
     borderRadius: 5,
-    bottom: '3%',
+    bottom: '2%',
     alignSelf: 'center',
+    // borderRadius: 20,
+    // padding: 10,
+    // elevation: 2,
+    // backgroundColor:'blue'
   },
   lockButton: {
     position: 'absolute',
     justifyContent: 'center',
-    alignSelf: 'flex-start',
+    alignSelf: 'flex-end',
+    bottom: '50%',
+    // borderRadius: 10,
+    // padding: 5,
+    // elevation: 2
   },
 });
 
