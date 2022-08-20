@@ -24,12 +24,12 @@ const TrackingMap = () => {
   };
 
   const map = useRef();
-  const perPosition = useRef();
 
   const [initalLocation, setinitalLocation] = useState();
   const [initLatLng, addLatLng] = useState([]);
   const [initLocation, updateLocation] = useState();
   const [initButton, setButton] = useState(false);
+  const [initLockView, setLockView] = useState(false);
 
   const foregroundServiceStart = () => {
     ReactNativeForegroundService.start({
@@ -42,11 +42,13 @@ const TrackingMap = () => {
       () => {
         Geolocation.watchPosition(
           position => {
+            console.log(position);
             const tempPosition = {
               latitude: position.coords.latitude,
               longitude: position.coords.longitude,
             };
 
+            updateLocation(tempPosition);
             addLatLng(initLatLng => [...initLatLng, tempPosition]);
             // updateLocation(previousPosition => (previousPosition,position));
           },
@@ -101,16 +103,16 @@ const TrackingMap = () => {
     if (!initLocation) {
       return;
     }
-
-    const trackRegion = {
-      latitude: initLocation.coords.latitude,
-      longitude: initLocation.coords.longitude,
-      latitudeDelta: 0.0121,
-      longitudeDelta: 0.00821,
-    };
-    perPosition.current = initLocation;
-    // console.log(trackRegion);
-    map.current.animateToRegion(trackRegion);
+    if (initLockView) {
+      const trackRegion = {
+        latitude: initLocation.latitude,
+        longitude: initLocation.longitude,
+        latitudeDelta: 0.0121,
+        longitudeDelta: 0.00821,
+      };
+      // console.log(trackRegion);
+      map.current.animateToRegion(trackRegion);
+    }
   }, [initLocation]);
 
   return (
@@ -149,6 +151,16 @@ const TrackingMap = () => {
           />
         </View>
       )}
+
+      {initLockView ? (
+        <View style={styles.lockButton}>
+          <Button color='red' title="LockView" onPress={() => setLockView(false)} />
+        </View>
+      ) : (
+        <View style={styles.lockButton}>
+          <Button title="LockView" onPress={() => setLockView(true)} />
+        </View>
+      )}
     </View>
   );
 };
@@ -167,6 +179,11 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     bottom: '3%',
     alignSelf: 'center',
+  },
+  lockButton: {
+    position: 'absolute',
+    justifyContent: 'center',
+    alignSelf: 'flex-start',
   },
 });
 
