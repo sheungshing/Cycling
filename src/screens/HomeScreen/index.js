@@ -9,8 +9,8 @@ import Routemap from "../../components/RouteMap";
 const HomeScreen = () => {
     return (
         // <View>
-            <View style={{witdth:'100%',height:'100%'}}>
-            <View>
+            <View >
+            <View style={{position:'absolute', justifyContent:'center', alignSelf:'center' ,marginTop: '50%',}}>
                 <HomeMap />
             </View >
 
