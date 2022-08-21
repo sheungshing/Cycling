@@ -7,6 +7,8 @@ import {
   Button,
   StyleSheet,
   Pressable,
+  Modal,
+  TouchableHighlight,
 } from 'react-native';
 import RNLocation from 'react-native-location';
 import ReactNativeForegroundService from '@supersami/rn-foreground-service';
@@ -35,10 +37,13 @@ const TrackingMap = () => {
   const [speed, setspeed] = useState('0');
   const [distance, setDistance] = useState(0);
 
+  const [modalVisible, setModalVisible] = useState(false);
+
   const [secondsLeft, setSecondsLeft] = useState(0);
   const [timerOn, setTimerOn] = useState(false);
 
   const foregroundServiceStart = () => {
+    startTimer();
     ReactNativeForegroundService.start({
       id: 1,
       title: 'Foreground Service',
@@ -220,6 +225,38 @@ const TrackingMap = () => {
         </View>
       </View>
 
+      <View style={styles.modalContainer}>
+      <Modal  animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          // Alert.alert('Modal has been closed.');
+          setModalVisible(!modalVisible);
+        }}>
+          <View style={styles.modalView}>
+            <View style={styles.modalRow}>
+            <Text style={styles.modalText}>
+            1. 佩戴安全頭盔 {'\n'}
+            2. 穿着有反光物料及合身的衣服 {'\n'}
+            3. 穿上個人防護裝備，例如護肘、護膝及手套 {'\n'}
+            4. 單車須配備警告車鈴及車尾紅色反光體 {'\n'}
+            5. 單車須配備警告車鈴及車尾紅色反光體 {'\n'}
+            </Text>
+            </View>
+            
+            <TouchableHighlight
+              style={{...styles.confirmButton, backgroundColor: '#2196F3'}}
+              onPress={() => {
+                setModalVisible(!modalVisible);
+                foregroundServiceStart();
+                setButton(true);
+              }}>
+              <Text style={styles.textStyle}>Hide Modal</Text>
+            </TouchableHighlight>
+          </View>
+      </Modal>
+      </View>
+
       {initButton ? (
         <View style={styles.tracktButton}>
           <Button
@@ -237,9 +274,9 @@ const TrackingMap = () => {
           <Button
             title="Start"
             onPress={() => {
-              foregroundServiceStart();
-              startTimer();
-              setButton(true);
+              
+              setModalVisible(true);
+              // setButton(true);
             }}
           />
         </View>
@@ -302,11 +339,65 @@ const styles = StyleSheet.create({
     position: 'absolute',
     justifyContent: 'center',
     alignSelf: 'flex-end',
-    bottom: '50%',
+    marginVertical: '17%',
     // borderRadius: 10,
     // padding: 5,
     // elevation: 2
   },
+
+  modalContainer:{
+    
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    position:'absolute',
+   
+
+  },
+  modalView: {
+    width:"80%",
+    height:"70%",
+    alignSelf: 'center',
+    marginVertical:'42%',
+    backgroundColor: 'white',
+    borderRadius: 20,
+    padding: '5%',
+  
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  confirmButton: {
+    backgroundColor: '#F194FF',
+    borderRadius: 20,
+    padding: 15,
+    elevation: 2,
+    alignSelf:'center',
+    marginTop:"10%",
+   // marginHorizontal:"20%",
+    marginLeft:'55%',
+  
+  },
+  modalRow:{
+  flexDirection:'row'  
+  },
+  textStyle: {
+    color: 'white',
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  modalText: {
+    fontSize:25,
+    marginTop:"20%",
+    textAlign:'left',
+  },
+
+
 });
 
 export default TrackingMap;
