@@ -7,6 +7,7 @@ import SearchResult from "../screens/SearchResult";
 import HomeTabNavigator from "./HomeTabNavigator";
 import PostScreen from "../screens/PostSreen";
 
+
 const Stack = createNativeStackNavigator();
 //
 const Router = () => {

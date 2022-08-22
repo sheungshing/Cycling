@@ -1,5 +1,7 @@
 import React, {useEffect, useState, useRef} from 'react';
 import {
+  Alert,
+  FlatList,
   View,
   Text,
   PermissionsAndroid,
@@ -13,11 +15,24 @@ import {
 import RNLocation from 'react-native-location';
 import ReactNativeForegroundService from '@supersami/rn-foreground-service';
 import BackgroundTimer from 'react-native-background-timer';
+import { Checkbox } from 'react-native-paper';
 
 import Geolocation from '@react-native-community/geolocation';
 const geolib = require('geolib');
 
 import MapView, {Marker, Polyline} from 'react-native-maps';
+
+
+const data = [
+  { id: 1, txt: '1.佩戴安全頭盔', isChecked: false },
+  { id: 2, txt: '2.穿着有反光物料及合身的衣服', isChecked: false },
+  { id: 3, txt: '3.穿上個人防護裝備，例如護肘、護膝及手套', isChecked: false },
+  { id: 4, txt: '4.單車須配備警告車鈴及車尾紅色反光體', isChecked: false },
+  { id: 5, txt: '5.單車須配備警告車鈴及車尾紅色反光體', isChecked: false },
+  
+];
+
+
 
 const TrackingMap = () => {
   let initialRegion = {
@@ -41,6 +56,8 @@ const TrackingMap = () => {
 
   const [secondsLeft, setSecondsLeft] = useState(0);
   const [timerOn, setTimerOn] = useState(false);
+  //chechbox
+  const [products, setProducts] = useState(data);
 
   const foregroundServiceStart = () => {
     startTimer();
@@ -184,6 +201,60 @@ const TrackingMap = () => {
     };
   };
 
+  const handleChange = (id) => {
+    let temp = products.map((product) => {
+      if (id === product.id) {
+        return { ...product, isChecked: !product.isChecked };
+      }
+      return product;
+    });
+    setProducts(temp);
+  };
+
+  //let selected = products.filter((product) => product.isChecked);
+
+  const renderFlatList = (renderData) => {
+    return (
+      <FlatList
+        data={renderData}
+        renderItem={({ item }) => (
+         
+            <View style={styles.card}>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  flex: 1,
+                  //justifyContent: 'space-between',
+                }}>
+                <Checkbox
+                status={item.isChecked ? 'checked' :'unchecked'}  
+                  
+                  onPress={() => {
+                    handleChange(item.id);
+                  }}
+                />
+                <Text style={styles.text} >{item.txt}</Text>
+              </View>
+            </View>
+         
+        )}
+      />
+    );
+  };
+
+  const checkCheckBox = ()  =>{
+    let check = true;
+    console.log('111')
+    products.forEach((product) => {
+      if(product.isChecked === false){
+        check = false;
+        return ;
+      }
+    })
+    return check;
+  } 
+
+
   return (
     <View>
       <MapView
@@ -234,24 +305,25 @@ const TrackingMap = () => {
           setModalVisible(!modalVisible);
         }}>
           <View style={styles.modalView}>
-            <View style={styles.modalRow}>
-            <Text style={styles.modalText}>
-            1. 佩戴安全頭盔 {'\n'}
-            2. 穿着有反光物料及合身的衣服 {'\n'}
-            3. 穿上個人防護裝備，例如護肘、護膝及手套 {'\n'}
-            4. 單車須配備警告車鈴及車尾紅色反光體 {'\n'}
-            5. 單車須配備警告車鈴及車尾紅色反光體 {'\n'}
-            </Text>
+            <View style={{width:'100%',height:'85%'}}>
+            <View style={{ flex: 1 }}>{renderFlatList(products)}</View>
             </View>
             
             <TouchableHighlight
               style={{...styles.confirmButton, backgroundColor: '#2196F3'}}
               onPress={() => {
+                if(checkCheckBox()){
                 setModalVisible(!modalVisible);
                 foregroundServiceStart();
+                setProducts(data);
                 setButton(true);
+                }else{
+                  Alert.alert('Please complete all the checkbox!!!');
+                }
+                
+                
               }}>
-              <Text style={styles.textStyle}>Hide Modal</Text>
+              <Text style={styles.textStyle}>Confirm</Text>
             </TouchableHighlight>
           </View>
       </Modal>
@@ -296,11 +368,7 @@ const TrackingMap = () => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-  },
+  
   dashBoardContainer: {
     position: 'absolute',
     width: '95%',
@@ -395,6 +463,28 @@ const styles = StyleSheet.create({
     fontSize:25,
     marginTop:"20%",
     textAlign:'left',
+  },
+
+  flatListContainer: {
+    flex: 1,
+    justifyContent: 'center',
+   // paddingTop: Constants.statusBarHeight,
+    backgroundColor: '#000',
+    padding: 8,
+  },
+  card: {
+    padding: 8,
+    margin: 5,
+    flexDirection: 'row',
+    //justifyContent: 'space-between',
+  },
+  text: {
+    fontSize:20,
+    textAlign:'left',
+    fontWeight: 'bold',
+    flex: 1,
+    // alignSelf:'flex-start',
+
   },
 
 
