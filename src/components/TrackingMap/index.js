@@ -11,6 +11,8 @@ import {
   Pressable,
   Modal,
   TouchableHighlight,
+  
+
 } from 'react-native';
 import RNLocation from 'react-native-location';
 import ReactNativeForegroundService from '@supersami/rn-foreground-service';
@@ -24,7 +26,7 @@ import MapView, {Marker, Polyline} from 'react-native-maps';
 
 
 const data = [
-  { id: 1, txt: '1.佩戴安全頭盔', isChecked: false },
+  { id: 1, txt: '1.', isChecked: false },
   { id: 2, txt: '2.穿着有反光物料及合身的衣服', isChecked: false },
   { id: 3, txt: '3.穿上個人防護裝備，例如護肘、護膝及手套', isChecked: false },
   { id: 4, txt: '4.單車須配備警告車鈴及車尾紅色反光體', isChecked: false },
@@ -58,6 +60,32 @@ const TrackingMap = () => {
   const [timerOn, setTimerOn] = useState(false);
   //chechbox
   const [products, setProducts] = useState(data);
+
+  const androidPremission2 = async () => {
+
+    try {
+
+      const backgroundgranted = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.ACCESS_BACKGROUND_LOCATION,
+        {
+          title: 'Background Location Permission',
+          message:
+            'We need access to your location ' +
+            'so you can get live quality updates.',
+          buttonNeutral: 'Ask Me Later',
+          buttonNegative: 'Cancel',
+          buttonPositive: 'OK',
+        },
+      );
+      if (backgroundgranted === PermissionsAndroid.RESULTS.GRANTED) {
+        
+        console.log("getbackground location")
+      }
+    } catch (err) {
+      console.log(err);
+    }
+
+  }
 
   const foregroundServiceStart = () => {
     startTimer();
@@ -313,6 +341,8 @@ const TrackingMap = () => {
               style={{...styles.confirmButton, backgroundColor: '#2196F3'}}
               onPress={() => {
                 if(checkCheckBox()){
+                
+                
                 setModalVisible(!modalVisible);
                 foregroundServiceStart();
                 setProducts(data);
@@ -346,7 +376,12 @@ const TrackingMap = () => {
           <Button
             title="Start"
             onPress={() => {
-              
+              PermissionsAndroid.check('android.permission.ACCESS_BACKGROUND_LOCATION').then(granted => 
+                {
+                  if(!granted){
+                    androidPremission2();
+                  }
+                })
               setModalVisible(true);
               // setButton(true);
             }}

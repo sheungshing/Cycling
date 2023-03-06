@@ -17,7 +17,7 @@ const CrimeMarker = props => {
           height: 20,
          borderRadius: 40,
         }}>
-        <Text
+        <Text 
           style={{
             fontSize: 12,
             fontWeight: 'bold',

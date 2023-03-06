@@ -15,10 +15,10 @@ const Tab = createBottomTabNavigator();
 const HomeTabNavigator = () => {
   return (
     <Tab.Navigator
-      // tabBarOptions={{
-      //     activeTintColor: '#f15454',
+      tabBarOptions={{
+          activeTintColor: '#f15454',
 
-      // }}
+      }}
       // screenOptions={{
       //   tabBarActiveTintColor: '#f15454',
       //   tabBarStyle: [
@@ -31,7 +31,7 @@ const HomeTabNavigator = () => {
       >
       <Tab.Screen
         name={'Home'}
-        component={TestScreen}
+        component={HomeScreen}
         options={{
           tabBarIcon: ({color}) => (
             <Fontisto name="search" size={25} color={color} />

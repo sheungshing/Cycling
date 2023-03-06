@@ -8,7 +8,7 @@
 
 import React, { useEffect } from 'react';
 import {
-  StatusBar,
+  
   PermissionsAndroid,
   Platform
 } from 'react-native';
