@@ -29,8 +29,8 @@ const App = () => {
         {
           title: "Location Permission",
           message:
-            "I Smart Cycling Partrol needs to your location" +
-            "so you can take awesome cycling.",
+          "Hiking Safety requires to your location" +
+          "so you can take awesome hiking.",
           buttonNeutral: "Ask Me Later",
           buttonNegative: "Cancel",
           buttonPositive: "OK"

@@ -34,8 +34,9 @@ const styles = StyleSheet.create({
   // },
   location: {
     fontSize: 17,
-    // marginVertical: 1,
+    marginHorizontal: 3,
     color: 'red',
+    marginBottom: 3,
   },
 
   crimeNumber: {

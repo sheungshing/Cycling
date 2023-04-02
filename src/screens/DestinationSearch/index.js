@@ -19,10 +19,10 @@ const DestinationSearch = () => {
     useEffect(() => {
         // console.warn(' use effect called!!!');
         if(originalPlace && !destinationPlace){
-            console.log(originalPlace)
+            // console.log(originalPlace)
         }
         if(destinationPlace && !originalPlace){
-            console.log(destinationPlace)
+            // console.log(destinationPlace)
         }
         
 
@@ -94,8 +94,10 @@ const DestinationSearch = () => {
                     query={{
                         key: 'AIzaSyANR3h2G1QwhlFCTlyEvR_gDeQNOJcLeCU',
                         language: 'en',
+                        components: 'country:hk'
                     }}
                     renderRow={(data) => <PlaceRow data={data} />}
+                    fetchDetails={true}
                 />
 
                 {/* Circle near Origin input */}
