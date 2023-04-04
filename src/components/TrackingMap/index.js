@@ -17,6 +17,7 @@ import ReactNativeForegroundService from '@supersami/rn-foreground-service';
 import Geolocation from '@react-native-community/geolocation';
 
 import MapView, {Marker, Polyline} from 'react-native-maps';
+const apiKey = "AIzaSyDXM1OETGAv7cr2AXBRf1RwpTiDAOhuJDQ";
 
 const TrackingMap = () => {
   let initialRegion = {
@@ -61,20 +62,26 @@ const TrackingMap = () => {
       //console.log(currentPosition);
       const distance = geolib.getDistance(currentPosition, point);
       //console.log(BSArray[j].name);
-      if(distance < 100 && !BSArray[j].alerted){
+      //console.log(BSArray);
+      if(distance < 100 && BSArray[j].alerted == false){
         //alert
         Alert.alert(
           'Warning',
           `You are near ${BSArray[j].name}!`,
           [{ text: 'OK' }]
         );
-        BSArray[j].alerted = true;//Alerted = true;
+        BSArray[j].alerted = true;//Alerted = true
+        //console.log(BSArray);
       }
     }
   }
 
   const foregroundServiceStart = () => {
     //Alerted = false;
+    // Set all alerted properties to false initially
+    for(let j=0; j<BSArray.length; j++){
+      BSArray[j].alerted = false;
+    }
     addLatLng([]);
     let watchId = Geolocation.watchPosition(
       position => {
@@ -82,10 +89,7 @@ const TrackingMap = () => {
           latitude: position.coords.latitude,
           longitude: position.coords.longitude,
         };
-        // Set all alerted properties to false initially
-        for(let j=0; j<BSArray.length; j++){
-          BSArray[j].alerted = false;
-        }
+        
         checkNearBlackSpot(tempPosition)
         updateLocation(tempPosition);
         addLatLng(initLatLng => [...initLatLng, tempPosition]);
@@ -111,10 +115,11 @@ const TrackingMap = () => {
     if (value === null) {
       value = "0"
     }
-    await AsyncStorage.setItem(value, JSON.stringify(initLatLng))
+    await AsyncStorage.setItem(value, JSON.stringify(initLatLng))////////////////save route
     await AsyncStorage.setItem("routesId", (parseInt(value) + 1).toString())
   };
-
+  
+  /*
   useEffect(() => {
     Geolocation.getCurrentPosition(
       position => {
@@ -135,7 +140,52 @@ const TrackingMap = () => {
       {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
     );
   }, []);
+*/
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      Geolocation.getCurrentPosition(//"AIzaSyDXM1OETGAv7cr2AXBRf1RwpTiDAOhuJDQ"
+        position => {
+          console.log(position);
+          const setStartRegion = {
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude,
+            latitudeDelta: 0.0322,
+            longitudeDelta: 0.0421,
+          };
+          getAltitude(position.coords.latitude,position.coords.longitude,apiKey);
+          //console.log('callingGETAltitude');
+          setinitalLocation(setStartRegion);
+          map.current.animateToRegion(setStartRegion);
+        },
+        error => {
+          // See error code charts below.
+          console.log(error.code, error.message);
+        },
+        {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
+      );
+    }, 5000);
+    return () => clearInterval(intervalId);
+  }, []);
 
+  function getAltitude(latitude, longitude, apiKey) {
+    const url = `https://maps.googleapis.com/maps/api/elevation/json?locations=${latitude},${longitude}&key=${apiKey}`;
+    //console.log(url);
+    return fetch(url)
+      .then(response => response.json())
+      .then(data => {
+        if (data.status === "OK") {
+          const altitude = data.results[0].elevation;
+          console.log("Altitude:" + altitude);
+          return altitude;
+        } else {
+          throw new Error(`Error getting elevation data: ${data.status}`);
+        }
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }
+  
   useEffect(() => {
     if (!initLocation) {
       return;
@@ -151,7 +201,6 @@ const TrackingMap = () => {
       map.current.animateToRegion(trackRegion);
     }
   }, [initLocation]);
-
   
   return (
     <View>
