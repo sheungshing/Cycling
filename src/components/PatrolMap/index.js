@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { FlatList, ScrollView, View, useWindowDimensions } from "react-native";
 import Post from "../Post";
 import routes from "../../Assets/data/patrolRoutes";
+import places from '../../Assets/data/feed';
 import DetailedPost from "../DetailedPost";
 import MapView, { Circle, Geojson, Marker } from 'react-native-maps';
 import RouteLine from "../RouteLine";
@@ -14,8 +15,8 @@ import RNLocation from 'react-native-location';
 const PatrolMap = () => {
 
   let initialRegion = {
-    latitude: 22.417070,
-    longitude: 114.227140,
+    latitude: 22.35037278125,
+    longitude: 114.19590679638672,
     latitudeDelta: 0.0922,
     longitudeDelta: 0.0421,
   }
@@ -27,7 +28,6 @@ const [initRegion, setRegion] = useState(initialRegion);
 
   const flatlist = useRef();
   const map = useRef();
-
   const viewConfig = useRef({ itemVisiblePercentThreshold: 70 });
   const onViewChanged = useRef(({ viewableItems }) => {
     if (viewableItems.length > 0) {
@@ -42,8 +42,8 @@ const [initRegion, setRegion] = useState(initialRegion);
       .then(latestLocation => {
         console.log(latestLocation);
         const setStartRegion = {
-          latitude: latestLocation.latitude,
-          longitude: latestLocation.longitude,
+          latitude: 22.35037278125,
+          longitude: 114.19590679638672,
           latitudeDelta: 0.0322,
           longitudeDelta: 0.0421,
         }
@@ -107,17 +107,7 @@ const [initRegion, setRegion] = useState(initialRegion);
             </View>
           )
         })}
-        <Circle
-          center={{
-            latitude: 22.386977,
-            longitude: 114.192513,
-          }}
-          radius={30}
-          strokeWidth={3}
-
-        >
-
-        </Circle>
+        
 
 
       </MapView>

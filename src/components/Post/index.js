@@ -24,15 +24,19 @@ const Post = (props) => {
         source={{uri: post.image}}
       />
       <Text style={styles.placeName}>
-        <Text>PlaceName:</Text>
+        <Text>{post.division}</Text>
       </Text>
 
       <Text style={styles.location}>
-        <Text>Location: {post.division}</Text>
+        <Text>Location: {post.district}</Text>
+      </Text>
+
+      <Text style={styles.location}>
+        <Text>Difficulty: {post.difficulty}</Text>
       </Text>
 
       <Text >
-        <Text>Crime Number: {post.crimeNumber} | Bike Number: {post.bikeNumber}</Text>
+        <Text>Duration: {post.duration}hr(s) | Length: {post.kilometers}km</Text>
       </Text>
 
       <Text style={styles.description} >

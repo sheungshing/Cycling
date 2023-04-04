@@ -7,7 +7,9 @@ import NotFound from '../components/NotFound';
 const Tab = createMaterialTopTabNavigator();
 
 const InfoTabNavigator =() => {
-
+/*<Tab.Screen name={"Crime"} component={InfoMapScreen} 
+            options={{title:'Crime'}}
+            />*/
     return(
         <Tab.Navigator
         screenOptions={{
@@ -16,13 +18,9 @@ const InfoTabNavigator =() => {
             
         }}
         >
-            <Tab.Screen name={"Crime"} component={InfoMapScreen} 
-            options={{
-                title:'Crime',
-            }}
-            />
-            <Tab.Screen name={'patrol'} component={PatrolMapScreen}/>
-            <Tab.Screen name={'News'} component={NotFound}/>
+            
+            <Tab.Screen name={'Routes'} component={PatrolMapScreen}/>
+            <Tab.Screen name={'User'} component={NotFound}/>
            
         </Tab.Navigator>
     );
