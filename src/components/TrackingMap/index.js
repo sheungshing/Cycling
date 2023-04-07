@@ -8,15 +8,24 @@ import {
   PermissionsAndroid,
   Platform,
   Button,
-  StyleSheet,
+  Image,
   Pressable,
+  StyleSheet,
+  Dimensions,
 } from 'react-native';
-import RNLocation from 'react-native-location';
+import {
+  getWeather,
+  dailyForecast,
+  showWeather,
+  getLocation,
+} from 'react-native-weather-api';
+//import RNLocation from 'react-native-location';
 import ReactNativeForegroundService from '@supersami/rn-foreground-service';
-
+//import AsyncStorage from '@react-native-async-storage/async-storage';
 import Geolocation from '@react-native-community/geolocation';
-
+import BackgroundTimer from 'react-native-background-timer';
 import MapView, {Marker, Polyline} from 'react-native-maps';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 const apiKey = "AIzaSyDXM1OETGAv7cr2AXBRf1RwpTiDAOhuJDQ";
 
 const TrackingMap = () => {
@@ -28,13 +37,26 @@ const TrackingMap = () => {
   };
 
   const map = useRef();
-
   const [initalLocation, setinitalLocation] = useState();
   const [initLatLng, addLatLng] = useState([]);
   const [initLocation, updateLocation] = useState();
   const [initButton, setButton] = useState(false);
   const [initLockView, setLockView] = useState(false);
   const [watchId, setWatchId] = useState();
+  const [speed, setspeed] = useState('0');
+  const [positions, setPositions] = useState([]);
+  const [location, setLocation] = useState(null);
+  const [altitude, setAltitude] = useState(null);
+  const [distance, setDistance] = useState(0);
+  const [timerOn, setTimerOn] = useState(false);
+  const [secondsLeft, setSecondsLeft] = useState(0);
+  const [weatherData, setWeatherData] = useState(null);
+  const [DashBoardShow, setDashBoardShow] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  //let altitude = 0;
+  let totalDistance = 0;
+  let startTime = null;
+
   const BSArray = [
     {alerted: false, name: 'Tai Shing Stream, Shing Mun',latitude: 22.39894963177416,longitude:114.14740932339873},
     {alerted: false, name: 'Lion Rock Peak',latitude: 22.35232973265008,longitude:114.18703856731156},
@@ -60,10 +82,10 @@ const TrackingMap = () => {
       const point = {latitude: BSArray[j].latitude, longitude: BSArray[j].longitude};
       //console.log(point);
       //console.log(currentPosition);
-      const distance = geolib.getDistance(currentPosition, point);
+      const distances = geolib.getDistance(currentPosition, point);
       //console.log(BSArray[j].name);
       //console.log(BSArray);
-      if(distance < 100 && BSArray[j].alerted == false){
+      if(distances < 100 && BSArray[j].alerted == false){
         //alert
         Alert.alert(
           'Warning',
@@ -76,20 +98,102 @@ const TrackingMap = () => {
     }
   }
 
+  const getWeatherdata = (latitude, longitude) => {
+    getWeather({
+      key: '91eefab72aa00afbb89bd11f60e07cbc',
+      lat: latitude,
+      lon: longitude,
+      unit: 'metric',
+    })
+      .then(() => {
+        let data = new showWeather();
+        setWeatherData({temp: data.temp, icon: data.icon});
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
+
+  function getAltitude(latitude, longitude, apiKey) {
+    const url = `https://maps.googleapis.com/maps/api/elevation/json?locations=${latitude},${longitude}&key=${apiKey}`;
+    //const url = `https://api.mapbox.com/v4/mapbox.mapbox-terrain-v2/tilequery/${longitude},${latitude}.json?access_token=pk.eyJ1Ijoia2FjY2MiLCJhIjoiY2xnNHd3bTE3MDB6NDNkbzZvNWg0MnF1aiJ9.qr15QuFk70dIsHxjbanxJA`;
+    //console.log(url);
+    return fetch(url)
+      .then(response => response.json())
+      .then(data => {
+
+        /*
+        console.log(data);console.log(data.features[0].properties.ele);
+        if (data.features && data.features.length > 0) {
+          const altitude = data.features[0].properties.ele;
+          console.log("Altitude:" + altitude);
+          return altitude;
+        } else {
+          throw new Error(`Error getting elevation data: ${data.message}`);
+        }
+        
+        const altitude = data.features[0].properties.ele;
+        return altitude;*/
+        
+        if (data.status === "OK") {
+          console.log("Altitude:" + altitude);
+          return altitude;
+        } else {
+          throw new Error(`Error getting elevation data: ${data.status}`);
+        }
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }
+
   const foregroundServiceStart = () => {
     //Alerted = false;
     // Set all alerted properties to false initially
+    startTimer();
     for(let j=0; j<BSArray.length; j++){
       BSArray[j].alerted = false;
     }
     addLatLng([]);
+    let previousPosition = null;
     let watchId = Geolocation.watchPosition(
       position => {
         const tempPosition = {
           latitude: position.coords.latitude,
           longitude: position.coords.longitude,
         };
+        //speed
+        /*const speedStr = position.coords.speed.toString();
+            setspeed(
+              speedStr.substring(0, speedStr.length - (speedStr.length - 5)),
+            );*/
         
+        // Calculate speed
+        let speed = 0;
+        if (previousPosition) {
+          const distance = geolib.getDistance(previousPosition, tempPosition);
+          totalDistance += distance;
+          const timeDiff = position.timestamp - previousPosition.timestamp;
+          speed = distance / timeDiff;
+
+        }
+        else{
+          speed = 0;
+        }
+        previousPosition = {
+          ...tempPosition,
+          timestamp: position.timestamp,
+        };
+        //setspeed(Math.floor(speed*1000));
+        setDistance(Math.floor(totalDistance));
+        // Calculate average speed
+        if (startTime === null) {
+          startTime = position.timestamp;
+        } else {
+          const elapsedTime = position.timestamp - startTime;
+          const averageSpeed = totalDistance / elapsedTime;
+          setspeed(Math.floor(averageSpeed * 1000));
+        }
         checkNearBlackSpot(tempPosition)
         updateLocation(tempPosition);
         addLatLng(initLatLng => [...initLatLng, tempPosition]);
@@ -106,20 +210,35 @@ const TrackingMap = () => {
         distanceFilter: 5,
       },
     );
-    setWatchId(watchId)
+    setWatchId(watchId);
   };
 
   const foregroundServiceStop = async () => {
-    Geolocation.clearWatch(watchId)
+    setspeed('0');
+    stopTimer();
+    setDistance(0);totalDistance = 0;
+    Geolocation.clearWatch(watchId);
     let value = await AsyncStorage.getItem('routesId');
     if (value === null) {
       value = "0"
     }
     await AsyncStorage.setItem(value, JSON.stringify(initLatLng))////////////////save route
     await AsyncStorage.setItem("routesId", (parseInt(value) + 1).toString())
+    uploadResult();
+    addLatLng([]);
+  };
+  //Timer
+  const startTimer = () => {
+    BackgroundTimer.runBackgroundTimer(() => {
+      setSecondsLeft(secs => secs + 1);
+    }, 1000);
+  };
+  const stopTimer = () => {
+      setSecondsLeft(0);
+      BackgroundTimer.stopBackgroundTimer();
   };
   
-  /*
+/*  
   useEffect(() => {
     Geolocation.getCurrentPosition(
       position => {
@@ -132,6 +251,7 @@ const TrackingMap = () => {
         };
         setinitalLocation(setStartRegion);
         map.current.animateToRegion(setStartRegion);
+        getWeatherdata(position.coords.latitude, position.coords.longitude);
       },
       error => {
         // See error code charts below.
@@ -141,6 +261,8 @@ const TrackingMap = () => {
     );
   }, []);
 */
+
+//get current location initially
   useEffect(() => {
     const intervalId = setInterval(() => {
       Geolocation.getCurrentPosition(//"AIzaSyDXM1OETGAv7cr2AXBRf1RwpTiDAOhuJDQ"
@@ -152,10 +274,11 @@ const TrackingMap = () => {
             latitudeDelta: 0.0322,
             longitudeDelta: 0.0421,
           };
-          getAltitude(position.coords.latitude,position.coords.longitude,apiKey);
           //console.log('callingGETAltitude');
           setinitalLocation(setStartRegion);
-          map.current.animateToRegion(setStartRegion);
+          setLocation(setStartRegion);
+          //map.current.animateToRegion(setStartRegion);
+          getWeatherdata(position.coords.latitude, position.coords.longitude);
         },
         error => {
           // See error code charts below.
@@ -167,41 +290,128 @@ const TrackingMap = () => {
     return () => clearInterval(intervalId);
   }, []);
 
-  function getAltitude(latitude, longitude, apiKey) {
-    const url = `https://maps.googleapis.com/maps/api/elevation/json?locations=${latitude},${longitude}&key=${apiKey}`;
-    //console.log(url);
-    return fetch(url)
-      .then(response => response.json())
-      .then(data => {
-        if (data.status === "OK") {
-          const altitude = data.results[0].elevation;
-          console.log("Altitude:" + altitude);
-          return altitude;
-        } else {
-          throw new Error(`Error getting elevation data: ${data.status}`);
-        }
-      })
-      .catch(error => {
-        console.log(error);
+  useEffect(() => {
+    if (location) {
+      const {latitude, longitude} = location;
+      setIsLoading(true);
+      getAltitude(latitude, longitude, apiKey).then(altitude => {
+        setAltitude(Math.floor(altitude));
+        setIsLoading(false);
       });
-  }
+    }
+  }, [location, apiKey]);
   
+
   useEffect(() => {
     if (!initLocation) {
       return;
     }
     if (initLockView) {
+      console.log(initLocation);
       const trackRegion = {
         latitude: initLocation.latitude,
         longitude: initLocation.longitude,
-        latitudeDelta: 0.0121,
-        longitudeDelta: 0.00821,
+        latitudeDelta: 0.0322,
+        longitudeDelta: 0.0421,
       };
       // console.log(trackRegion);
+      
       map.current.animateToRegion(trackRegion);
+      //getWeatherdata(initLocation.coords.latitude, initLocation.coords.longitude);
+      //console.log(weatherData);
     }
   }, [initLocation]);
-  
+
+  //timer change
+  useEffect(() => {
+    if (timerOn) startTimer();
+    else BackgroundTimer.stopBackgroundTimer();
+    return () => {
+      BackgroundTimer.stopBackgroundTimer();
+    };
+  }, [timerOn]);
+
+  useEffect(() => {
+    if (secondsLeft === 0) BackgroundTimer.stopBackgroundTimer();
+  }, [secondsLeft]);
+  const clockify = () => {
+    let hours = Math.floor(secondsLeft / 60 / 60);
+    let mins = Math.floor((secondsLeft / 60) % 60);
+    let seconds = Math.floor(secondsLeft % 60);
+    let displayHours = hours < 10 ? `0${hours}` : hours;
+    let displayMins = mins < 10 ? `0${mins}` : mins;
+    let displaySecs = seconds < 10 ? `0${seconds}` : seconds;
+    return {
+      displayHours,
+      displayMins,
+      displaySecs,
+    };
+  };
+
+ 
+  // update the result (number of routes finished) after finished
+  const uploadResult = async () => {
+    try {
+      let tRide = await AsyncStorage.getItem('@tRide'); //Distance of ride
+      let totalComplete = await AsyncStorage.getItem('@routeCompleted');// count of route completed
+      let rideDetails = await AsyncStorage.getItem('@detailsRide');//data of ONE ride
+      if (tRide !== null) {
+        parseFloat(tRide);
+        tRide = (parseFloat(tRide) + distance).toFixed(3);
+      } else {
+        tRide = distance;
+      }
+
+      if (totalComplete !== null) {
+        totalComplete++;
+      } else {
+        totalComplete = 1;
+      }
+
+      let yourDate = new Date();
+      const offset = yourDate.getTimezoneOffset();
+      yourDate = new Date(yourDate.getTime() - offset * 60 * 1000);
+      const date = yourDate.toISOString().split('T')[0];
+      const time = yourDate.toISOString().split('T')[1].split('.')[0];
+
+      if (rideDetails !== null) {
+        console.log(rideDetails);
+        let objects = JSON.parse(rideDetails);
+        let tempDetail = {
+          id: totalComplete - 1,
+          dis: distance,
+          spe: speed,
+          cal: 0,
+          date: date,
+          time: time,
+        };
+        
+        let objectArray = objects;
+        // objectArray.push(objects)
+        objectArray.push(tempDetail);
+        rideDetails = JSON.stringify(objectArray);
+      } else {
+        console.log('else!');
+        let object = [];
+        let tempDetail = {
+          id: 0,
+          dis: distance,
+          spe: speed,
+          cal: 0,
+          date: date,
+          time: time,
+        };
+        object.push(tempDetail);
+        rideDetails = JSON.stringify(object);
+      }
+
+      await AsyncStorage.setItem('@tRide', tRide.toString());
+      await AsyncStorage.setItem('@routeCompleted', totalComplete.toString());
+      await AsyncStorage.setItem('@detailsRide', rideDetails);
+    } catch (e) {
+      console.log(e);
+    }
+  };
   return (
     <View>
       <MapView
@@ -250,9 +460,92 @@ const TrackingMap = () => {
         coordinate={{ latitude: 22.41624550800231, longitude: 114.24487709882355 }}/>
         <Marker icon={require('./alert.png')} //Fei Ngo Shan, Ma On Shan
         coordinate={{ latitude: 22.338247825060193, longitude: 114.22350691452257 }}/>
-
-
       </MapView>
+
+
+    {/* <WeatherDisplay/> */}
+      <View
+        //id="weather container"
+        style={{
+          position: 'absolute',
+          top: '25%',
+          right: '5%',
+        }}>   
+        {weatherData && (
+          <Image
+            style={{width: 50, height: 50}}
+            source={{uri: `${weatherData.icon}`}}
+          />
+        )}
+        <Text style={{marginLeft: 'auto'}}>
+          {weatherData ? Math.floor(weatherData.temp) + 'ºC' : 0}
+        </Text>
+      </View>
+
+
+      <Pressable
+        style={({pressed}) => [
+          {
+            backgroundColor: pressed ? 'grey' : 'white',
+          },
+          styles.dashBoardButtonContainer,
+        ]}
+        onPress={() => {
+          setDashBoardShow(!DashBoardShow);
+        }}>
+        <View>
+          <AntDesign name="dashboard" size={50} color="black" />
+        </View>
+      </Pressable>
+
+      {DashBoardShow && (
+        <View style={styles.dashBoardContainer}>
+          <View style={{flexDirection: 'row'}}>
+            <Text
+              style={{
+                marginHorizontal: 10,
+                borderRightWidth: 1,
+                paddingRight: 10,
+              }}>
+              Speed: {speed} m/s
+            </Text>
+            <Text>Distance: {distance} m</Text>
+          </View>
+          <View>
+          <Text style={{
+                marginHorizontal: 10,
+                borderRightWidth: 1,
+                paddingRight: 1,
+              }}>
+            Time:{clockify().displayHours}:{clockify().displayMins}:
+            {clockify().displaySecs}
+          </Text>
+          </View>
+          <View style={{flexDirection: 'row'}}>
+          {isLoading ? (
+            <Text style={{
+              marginHorizontal: 10,
+              borderRightWidth: 1,
+              paddingRight: 10,
+            }}>Loading altitude data...</Text>
+          ) : altitude ? (
+            <Text style={{
+              marginHorizontal: 10,
+              borderRightWidth: 1,
+              paddingRight: 10,
+            }}>Altitude: {altitude} m</Text>
+          ) : (
+            <Text style={{
+              marginHorizontal: 10,
+              borderRightWidth: 1,
+              paddingRight: 10,
+            }}>Failed to retrieve altitude data.</Text>
+          )}
+            </View>
+        </View>
+      )}
+
+      
       {initButton ? (
         <View style={styles.tracktButton}>
           <Button
@@ -289,7 +582,27 @@ const TrackingMap = () => {
   );
 };
 
+export default TrackingMap;
+
 const styles = StyleSheet.create({
+  
+  dashBoardButtonContainer: {
+    position: 'absolute',
+    transform: [{translateX: 0}, {translateY: 200}],
+    flex: 1,
+    borderRadius: 10,
+    padding: 5,
+  },
+
+  dashBoardContainer: {
+    position: 'absolute',
+    top: '15%',
+    // transform: [{translateX: 0}, {translateY: 270}],
+    flex: 1,
+    backgroundColor: 'white',
+    borderRadius: 10,
+    padding: 5,
+  },
   container: {
     flex: 1,
     backgroundColor: '#fff',
@@ -310,5 +623,3 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
   },
 });
-
-export default TrackingMap;

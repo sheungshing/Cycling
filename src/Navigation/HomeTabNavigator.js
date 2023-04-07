@@ -7,6 +7,7 @@ import TrackingScreen from '../screens/TrackingScreen';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import Feather from 'react-native-vector-icons/Feather';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 const Tab = createBottomTabNavigator();
 
@@ -42,7 +43,7 @@ const HomeTabNavigator = () => {
         component={TrackingScreen}
         options={{
           tabBarIcon: ({color}) => (
-            <FontAwesome5 name="airbnb" size={25} color={color} />
+            <MaterialIcons name="play-circle-outline" size={25} color={color} />
           ),
           headerShown: false,
         }}

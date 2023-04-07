@@ -468,7 +468,7 @@ export default [
         strokeColor: 'red',
         distance: 6.4,
         duration: 3,
-        image: 'https://pixabay.com/get/gfe55ef540764f37918f6ab46515e8dc7744a517da8745d6a0a6cf12c762493d4d06455e9992b37afc7ffccfcd76d5ab51f4cd9d4d1ccfd4192916f32990a97c05b95df43c96eea270fbf3a8aaabab25e_1920.jpg',
+        image: 'http://www.hkhikers.com/images/Lung%20Ha%20Wan/Lung%20Ha%20Wan%2013.JPG',
         coordinate: {
             latitude: 22.29610834103504,
             longitude: 114.2916525416797,

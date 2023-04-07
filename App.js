@@ -10,18 +10,17 @@ import React, { useEffect } from 'react';
 import {
   StatusBar,
   PermissionsAndroid,
-  Platform
+  Platform,
+  AsyncStorage,
 } from 'react-native';
 import Geolocation from '@react-native-community/geolocation';
 import Router from './src/Navigation/Router'
-
-
-
 
 navigator.geolocation = require('@react-native-community/geolocation');
 
 const App = () => {
   // request location premission 
+  //AsyncStorage.clear();
   const androidPremission = async () => {
     try {
       const granted = await PermissionsAndroid.request(

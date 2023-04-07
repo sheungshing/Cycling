@@ -75,6 +75,58 @@ const styles = StyleSheet.create({
       marginBottom: 10,
       color: "#0B3142",
     },
+    ////////////////////////
+    container: {
+      flex: 1,
+    },
+    userInfoSection: {
+      paddingHorizontal: 30,
+      marginBottom: 25,
+    },
+    title: {
+      fontSize: 30,
+      fontWeight: '900',
+    },
+    nickname: {
+      fontSize: 20,
+      lineHeight: 20,
+      fontWeight: '400',
+    },
+    row: {
+      flexDirection: 'row',
+      marginBottom: 12,
+    },
+    infoBoxWrapper: {
+      borderBottomColor: '#dddddd',
+      borderBottomWidth: 1,
+      borderTopColor: '#dddddd',
+      borderTopWidth: 1,
+      flexDirection: 'row',
+      height: 100,
+    },
+    infoBox: {
+      alignItems: 'center',
+      justifyContent: 'center',
+      width: '50%'
+    },
+    menuWrapper: {
+      marginTop: 1,
+    },
+    menuItem: {
+      borderRadius: 25,
+      backgroundColor: '#99F3F5',
+      flexDirection: 'row',
+      paddingVertical: 10,
+      paddingHorizontal: 40,
+      margin: 10
+    },
+    menuItemText: {
+      color: 'black',
+      marginLeft: 35,
+      fontWeight: 'bold',
+      fontSize: 20,
+      lineHeight: 30,
+    },
   });
   
 export default styles;
