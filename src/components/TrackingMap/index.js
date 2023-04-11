@@ -468,8 +468,11 @@ const TrackingMap = () => {
         //id="weather container"
         style={{
           position: 'absolute',
-          top: '25%',
-          right: '5%',
+          top: '28%',
+          right: '1%',
+          backgroundColor:'rgba(0, 0, 0, 0.2)',
+          opacity: 0.8,
+
         }}>   
         {weatherData && (
           <Image
@@ -477,9 +480,7 @@ const TrackingMap = () => {
             source={{uri: `${weatherData.icon}`}}
           />
         )}
-        <Text style={{marginLeft: 'auto'}}>
-          {weatherData ? Math.floor(weatherData.temp) + 'ºC' : 0}
-        </Text>
+        <Text>{weatherData ? Math.floor(weatherData.temp) + 'ºC' : 0}</Text>
       </View>
 
 
@@ -585,23 +586,32 @@ const TrackingMap = () => {
 export default TrackingMap;
 
 const styles = StyleSheet.create({
-  
   dashBoardButtonContainer: {
     position: 'absolute',
-    transform: [{translateX: 0}, {translateY: 200}],
-    flex: 1,
+    right: '1%',
+    bottom:'55%',
+    alignSelf: 'center',
     borderRadius: 10,
+    height:50,
+    width:50,
     padding: 5,
   },
-
   dashBoardContainer: {
     position: 'absolute',
-    top: '15%',
-    // transform: [{translateX: 0}, {translateY: 270}],
-    flex: 1,
+    top: '10%',
+    width: '90%',
+    marginHorizontal: '5%',
     backgroundColor: 'white',
     borderRadius: 10,
-    padding: 5,
+    padding: 10,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
   container: {
     flex: 1,
@@ -611,15 +621,14 @@ const styles = StyleSheet.create({
   },
   tracktButton: {
     position: 'absolute',
-    justifyContent: 'center',
-    width: '70%',
+    bottom: '5%',
+    width: '80%',
     borderRadius: 5,
-    bottom: '3%',
     alignSelf: 'center',
   },
   lockButton: {
     position: 'absolute',
-    justifyContent: 'center',
-    alignSelf: 'flex-start',
+    top: '5%',
+    left: '5%',
   },
 });
