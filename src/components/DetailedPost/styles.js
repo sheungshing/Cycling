@@ -1,93 +1,65 @@
 import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
-
-  /*
   container: {
-    margin: 20,
+    backgroundColor: '#F7F7F7',
+    borderRadius: 10,
+    shadowColor: '#000',
+    shadowOffset: {width: 0, height: 2},
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+    marginBottom: 10,
+    padding: 10,
   },
   image: {
     width: '100%',
-    aspectRatio: 3 / 2,
+    height: 200,
     resizeMode: 'cover',
     borderRadius: 10,
+    marginBottom: 10,
   },
-
-  description: {
-    textAlign:'justify',
-    marginVertical: 10,
+  infoContainer: {
+    marginLeft: 10,
+  },
+  title: {
+    fontWeight: 'bold',
+    fontSize: 22,
+    marginBottom: 10,
+  },
+  location: {
     fontSize: 16,
-    lineHeight: 24,
+    marginBottom: 5,
   },
-  crimeNumber: {
-    // fontSize: 18,
-    // marginVertical: 10,
+  difficulty: {
+    fontSize: 16,
+    marginBottom: 5,
+    color: 'green',
   },
-  location:{
-    //marginVertical: 0,
-    color: '#5b5b5b',
+  duration: {
+    fontSize: 16,
+    marginBottom: 5,
+    color: 'gray',
   },
-  placeName: {
-    textAlign:'justify',
-    marginVertical: 10,
-    fontSize: 24,
-    lineHeight: 24,
-    color: 'Red',
+  mapContainer: {
+    width: '100%',
+    height: 200,
+    marginBottom: 10,
+    backgroundColor: '#EDEDED',
+    // Add a map or graphic of the route
   },
-  // oldPrice: {
-  //   color: '#5b5b5b',
-  //   textDecorationLine: 'line-through',
-  // },
-  // price: {
-  //   fontWeight: 'bold',
-  // },
-  // totalPrice: {
-  //   color: '#5b5b5b',
-  //   textDecorationLine: 'underline',
-  // }
-*/
-container: {
-  padding: 10,
-  backgroundColor: '#fff',
-  borderRadius: 10,
-  shadowColor: '#000',
-  shadowOffset: { width: 0, height: 2 },
-  shadowOpacity: 0.25,
-  shadowRadius: 3.84,
-  elevation: 5,
-  marginBottom: 10
-},
-image: {
-  width: '100%',
-  height: 200,
-  resizeMode: 'cover',
-  borderRadius: 10,
-  marginBottom: 10
-},
-placeName: {
-  fontWeight: 'bold',
-  fontSize: 18,
-  marginBottom: 5
-},
-location: {
-  fontSize: 16,
-  //marginBottom: 5
-},
-difficulty: {
-  fontSize: 16,
-  marginBottom: 5,
-  color: 'green'
-},
-details: {
-  fontSize: 14,
-  marginBottom: 5,
-  color: 'gray'
-},
-description: {
-  fontSize: 14,
-  marginTop:10,
-  lineHeight: 20
-}
+  description: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    marginTop: 10,
+    marginBottom: 5,
+  },
+  descriptionText: {
+    fontSize: 14,
+    marginBottom: 5,
+    lineHeight: 20,
+  },
 });
+
 
 export default styles;

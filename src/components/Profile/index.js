@@ -13,7 +13,7 @@ import {
   TouchableRipple,
 } from 'react-native-paper';
 
-const NotFound = () => {
+const Profile = () => {
   
   const flatlist = useRef();
   const isFocused = useIsFocused();
@@ -123,46 +123,6 @@ const NotFound = () => {
     //console.log('line153: '+typeof hikeDetails)
   },[isFocused]);
   return (
-    /*
-    <ScrollView>
-      <View style={styles.container}>
-        <View style={styles.profileHeader}>
-          <View style={styles.userIconContainer}>
-          <Image source={require('./user-icon.jpg')} style={styles.userIcon} />
-          </View>
-          <View>
-            <Text style={styles.username}>John Doe</Text>
-            <Text style={styles.totalHours}>Total hours hiked: 35 hours</Text>
-          </View>
-        </View>
-
-        <View style={styles.activityItems}>
-          <FlatList
-            data={activities}
-            renderItem={renderActivityItem}
-            horizontal
-            showsHorizontalScrollIndicator={false}
-          />
-        </View>
-
-        <View style={styles.previousHike}>
-          <Text style={styles.previousHikeTitle}>Previous Hikes</Text>
-          <FlatList
-            data={previousHikes}
-            renderItem={renderPreviousHikeItem}
-            showsVerticalScrollIndicator={false}
-          />
-        </View>
-
-        <View style={styles.otherDetails}>
-          <Text style={styles.detail}>Age: 30 years</Text>
-          <Text style={styles.detail}>Gender: Male</Text>
-          <Text style={styles.detail}>Nationality: American</Text>
-        </View>
-      </View>
-    </ScrollView>*/
-
-
 
     <SafeAreaView style={styles.container}>
       <View style={styles.userInfoSection}>
@@ -199,7 +159,7 @@ const NotFound = () => {
             borderRightColor: '#dddddd',
             borderRightWidth: 1
           }]}>
-            <Title style={{fontWeight:'bold'}}>{tRide} m</Title>
+            <Title style={{fontWeight:'bold'}}>{tRide/1000} km</Title>
             <Caption>Total Hike</Caption>
           </View>
           <View style={styles.infoBox}>
@@ -219,4 +179,4 @@ const NotFound = () => {
   );
 };
 
-export default NotFound;
+export default Profile;

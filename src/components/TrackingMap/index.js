@@ -348,7 +348,7 @@ const TrackingMap = () => {
     };
   };
 
- 
+
   // update the result (number of routes finished) after finished
   const uploadResult = async () => {
     try {
