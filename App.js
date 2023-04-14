@@ -6,84 +6,81 @@
  * @flow strict-local
  */
 
-import React, { useEffect } from 'react';
-import {
-  StatusBar,
-  PermissionsAndroid,
-  Platform,
-  AsyncStorage,
-} from 'react-native';
-import Geolocation from '@react-native-community/geolocation';
-import Router from './src/Navigation/Router'
+import React, {useEffect,useState} from 'react';
+import {PermissionsAndroid, Platform, View, Button , AsyncStorage} from 'react-native';
+import { requestMultiple, PERMISSIONS} from 'react-native-permissions';
 
-navigator.geolocation = require('@react-native-community/geolocation');
 
-const App = () => {
-  // request location premission 
-  //AsyncStorage.clear();
-  const androidPremission = async () => {
-    try {
-      const granted = await PermissionsAndroid.request(
+import Router from './src/Navigation/Router';
+
+
+
+//Amplify.configure(config);
+
+const App = () =>{
+
+    const[getIn,setgetIn] = useState(false)
+
+
+  const requestPermission =() => {
+      const permissions = [
+        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+        PermissionsAndroid.PERMISSIONS.ACCESS_BACKGROUND_LOCATION
+      ]
+      // const results = await PermissionsAndroid.requestMultiple(permissions)
+      // const allPermissionsGranted = Object.values(results).every(result => result === PermissionsAndroid.RESULTS.GRANTED);
+      const location = ()=>{PermissionsAndroid.request(
         PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
         {
-          title: "Location Permission",
+          title: 'Location Permission',
           message:
-          "Hiking Safety requires to your location" +
-          "so you can take awesome hiking.",
-          buttonNeutral: "Ask Me Later",
-          buttonNegative: "Cancel",
-          buttonPositive: "OK"
-        }
-
-      );
-    } catch (err) {
-      console.log(err);
-    }
-  }
-
-  const androidPremission2 = async () => {
-
-    try {
-
-      const backgroundgranted = await PermissionsAndroid.request(
-        PermissionsAndroid.PERMISSIONS.ACCESS_BACKGROUND_LOCATION,
-        {
-          title: 'Background Location Permission',
-          message:
-            'We need access to your location ' +
-            'so you can get live quality updates.',
+            'Hiking needs to your location' + 'so you can take awesome hiking.',
           buttonNeutral: 'Ask Me Later',
           buttonNegative: 'Cancel',
           buttonPositive: 'OK',
         },
-      );
-      if (backgroundgranted === PermissionsAndroid.RESULTS.GRANTED) {
+      
+      ).then(()=>{
+        return PermissionsAndroid.request(
+          PermissionsAndroid.PERMISSIONS.ACCESS_BACKGROUND_LOCATION,
+          {
+            title: 'Background Location Permission',
+            message:
+              'We need access to your location ' +
+              'so you can get live quality updates.',
+            buttonNeutral: 'Ask Me Later',
+            buttonNegative: 'Cancel',
+            buttonPositive: 'OK',
+          },
+        );
+      }).then((granted)=>{
+        //console.log("getting alert")
+        return AsyncStorage.getItem('@alert');
+      }).then((value)=>{
+        if(value === null){
+          alert("Please restart this application after allowing all permissions");
+        }
+        AsyncStorage.setItem('@alert', '1');
+      })
+    }
         
-        console.log("getbackground location")
-      }
-    } catch (err) {
-      console.log(err);
-    }
+      location();  
+  };
 
-  }
+   useEffect(() => {
+     if (Platform.OS === 'android') {
+       // androidPremission();
+       // androidPremission2();
 
-  useEffect(() => {
-    if (Platform.OS === 'android') {
-       androidPremission();
-      androidPremission2();
-    } else {
-      //for IOS
-      Geolocation.requestAuthorization();
-    }
-  }, [])
+       requestPermission();
+     } else {
+       //for IOS
+     }
+   }, []);
 
   return (
-    <>
-      <Router />
-    </>
+   <Router/>
   );
 };
-
-
 
 export default App;

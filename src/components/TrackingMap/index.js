@@ -401,14 +401,15 @@ const TrackingMap = props => {
       yourDate = new Date(yourDate.getTime() - offset * 60 * 1000);
       const date = yourDate.toISOString().split('T')[0];
       const time = yourDate.toISOString().split('T')[1].split('.')[0];
-
+      const period =  clockify().displayHours.toString()+':'+clockify().displayMins.toString()+':'+clockify().displaySecs.toString()
+      console.log('time: ' + period)
       if (rideDetails !== null) {
         let objects = JSON.parse(rideDetails);
         let tempDetail = {
           id: totalComplete - 1,
           dis: distance,
           spe: speed,
-          cal: showTCalories,
+          cal: period,
           date: date,
           time: time,
         };
@@ -424,7 +425,7 @@ const TrackingMap = props => {
           id: 0,
           dis: distance,
           spe: speed,
-          cal: showTCalories,
+          cal: period,
           date: date,
           time: time,
         };
