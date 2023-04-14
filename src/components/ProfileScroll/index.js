@@ -11,6 +11,7 @@ const ProfileScroll = props => {
       </View>
       <View style={styles.infoContainer}>
         <Text style={styles.infoText}>Time: {data.time}</Text>
+        <Text style={styles.infoText}>Period: {data.time}</Text>
         <Text style={styles.infoText}>Distance: {data.dis} km</Text>
         <Text style={styles.infoText}>Avg Speed: {data.spe} km/h</Text>
       </View>
@@ -30,10 +31,10 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     marginVertical: 5,
     marginHorizontal: 10,
-    padding: 10,
+    padding: 5,
   },
   dateContainer: {
-    backgroundColor: '#9ACD32',
+    backgroundColor: '#6FB1FC',
     borderRadius: 10,
     padding: 5,
     marginRight: 10,
@@ -49,7 +50,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   infoText: {
-    fontSize: 16,
+    fontSize: 14,
     color: 'gray',
     marginVertical: 2,
   },

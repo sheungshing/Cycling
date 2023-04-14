@@ -461,10 +461,7 @@ const TrackingMap = props => {
             icon={require('./alert.png')}
           />
         ))}
-
-      
       </MapView>
-
 
       <View
         //id="weather container"
@@ -543,39 +540,41 @@ const TrackingMap = props => {
         </View>
       </Pressable>
 
-      <View style={styles.dashBoardContainer}>
-        <View style={styles.row}>
-          <View style={[styles.cell, styles.leftTop]}>
-            <Text style={styles.titleText}>Speed</Text>
-            <Text style={styles.dataValue}>{speed} m/s</Text>
+      {DashBoardShow && (
+        <View style={styles.dashBoardContainer}>
+          <View style={styles.row}>
+            <View style={[styles.cell, styles.leftTop]}>
+              <Text style={styles.titleText}>Speed</Text>
+              <Text style={styles.dataValue}>{speed} m/s</Text>
+            </View>
+            <View style={[styles.cell, styles.rightTop]}>
+              <Text style={styles.titleText}>Distance</Text>
+              <Text style={styles.dataValue}>{distance} m</Text>
+            </View>
           </View>
-          <View style={[styles.cell, styles.rightTop]}>
-            <Text style={styles.titleText}>Distance</Text>
-            <Text style={styles.dataValue}>{distance} m</Text>
-          </View>
-        </View>
-        <View style={styles.row}>
-          <View style={[styles.cell, styles.leftBottom]}>
-            <Text style={styles.titleText}>Time</Text>
-            <Text style={styles.dataValue}>
-              {clockify().displayHours}:{clockify().displayMins}:
-              {clockify().displaySecs}
-            </Text>
-          </View>
-          <View style={[styles.cell, styles.rightBottom]}>
-            <Text style={styles.titleText}>Altitude</Text>
-            {isLoading ? (
-              <Text style={styles.dataValue}>Loading altitude data...</Text>
-            ) : altitude ? (
-              <Text style={styles.dataValue}>{altitude} m</Text>
-            ) : (
+          <View style={styles.row}>
+            <View style={[styles.cell, styles.leftBottom]}>
+              <Text style={styles.titleText}>Time</Text>
               <Text style={styles.dataValue}>
-                Failed to retrieve altitude data.
+                {clockify().displayHours}:{clockify().displayMins}:
+                {clockify().displaySecs}
               </Text>
-            )}
+            </View>
+            <View style={[styles.cell, styles.rightBottom]}>
+              <Text style={styles.titleText}>Altitude</Text>
+              {isLoading ? (
+                <Text style={styles.dataValue}>Loading altitude data...</Text>
+              ) : altitude ? (
+                <Text style={styles.dataValue}>{altitude} m</Text>
+              ) : (
+                <Text style={styles.dataValue}>
+                  Failed to retrieve altitude data.
+                </Text>
+              )}
+            </View>
           </View>
         </View>
-      </View>
+      )}
 
       {started &&
         (initLockView ? (
