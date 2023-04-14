@@ -3,6 +3,7 @@ import { View, Text, StyleSheet } from 'react-native';
 
 const ProfileScroll = props => {
   const data = props.data;
+  console.log(data)
 
   return (
     <View style={styles.container}>
@@ -11,7 +12,7 @@ const ProfileScroll = props => {
       </View>
       <View style={styles.infoContainer}>
         <Text style={styles.infoText}>Time: {data.time}</Text>
-        <Text style={styles.infoText}>Period: {data.cla}</Text>
+        <Text style={styles.infoText}>Period: {data.cal}</Text>
         <Text style={styles.infoText}>Distance: {data.dis} km</Text>
         <Text style={styles.infoText}>Avg Speed: {data.spe} km/h</Text>
       </View>
