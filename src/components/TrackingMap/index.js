@@ -298,7 +298,7 @@ const TrackingMap = props => {
 
       map.current.animateToRegion(trackRegion);
       //getWeatherdata(initLocation.coords.latitude, initLocation.coords.longitude);
-      //console.log(weatherData);
+      console.log(weatherData);
     }
   }, [initLocation]);
 
@@ -462,48 +462,15 @@ const TrackingMap = props => {
           />
         ))}
 
-        {/* {toilets.map((toilet)=>(
-          <ToiletMarker key={toilet.id}
-          coordinate={toilet.coordinate}
-          />
-        ))} */}
-
-        {/* {Toilets &&
-          Toilets.map(Toilet => (
-            <ToiletMarker key={Toilet.id} coordinate={Toilet.coordinate} />
-          ))}
-        
-        {BlackSpots &&
-          BlackSpots.map(blackSpot => (
-            <BlackSpotsMarker key={blackSpot.id} coordinate={blackSpot.coordinate} />
-          ))}
-
-        {des && <DestinationMarker destination={des} />}
-        {des && initLocation && (
-          <MapViewDirections
-            origin={{
-              latitude: initLocation.coords.latitude,
-              longitude: initLocation.coords.longitude,
-            }}
-            destination={{
-              latitude: des.location.lat,
-              longitude: des.location.lng,
-            }}
-            strokeWidth={10}
-            strokeColor="#3FC060"
-            apikey="AIzaSyANR3h2G1QwhlFCTlyEvR_gDeQNOJcLeCU"
-          />
-        )} */}
+      
       </MapView>
 
-      {/* <PlacesAutoComplete/> */}
-      {/* <WeatherDisplay/> */}
 
       <View
         //id="weather container"
         style={{
           position: 'absolute',
-          top: '28%',
+          top: '50%',
           right: '1%',
           backgroundColor: 'rgba(0, 0, 0, 0.2)',
           opacity: 0.8,
@@ -517,27 +484,6 @@ const TrackingMap = props => {
         )}
         <Text>{weatherData ? Math.floor(weatherData.temp) + 'ºC' : 0}</Text>
       </View>
-
-      {/* <View style={styles.searchButtonContainer}>
-        <Pressable
-          style={styles.searchButton}
-          onPress={() => {
-            if (started) {
-              console.log(
-                'Please press the stop button to change the destination',
-              );
-              return;
-            }
-            navigation.navigate('Destination Search', {
-              someData: 1234,
-              updateParent: updateDestination,
-            });
-            //navigation.navigate('Destination Search');
-          }}> */}
-      {/* <Fontisto name="search" size={25} color={'#f15454'} /> */}
-      {/* <Text style={styles.searchButtonText}>Set Your Destination</Text>
-        </Pressable>
-      </View> */}
 
       <View
         style={{
@@ -600,26 +546,30 @@ const TrackingMap = props => {
       <View style={styles.dashBoardContainer}>
         <View style={styles.row}>
           <View style={[styles.cell, styles.leftTop]}>
-            <Text style={styles.dataText}>Speed: {speed} m/s</Text>
+            <Text style={styles.titleText}>Speed</Text>
+            <Text style={styles.dataValue}>{speed} m/s</Text>
           </View>
           <View style={[styles.cell, styles.rightTop]}>
-            <Text style={styles.dataText}>Distance: {distance} m</Text>
+            <Text style={styles.titleText}>Distance</Text>
+            <Text style={styles.dataValue}>{distance} m</Text>
           </View>
         </View>
         <View style={styles.row}>
           <View style={[styles.cell, styles.leftBottom]}>
-            <Text style={styles.dataText}>
-              Time: {clockify().displayHours}:{clockify().displayMins}:
+            <Text style={styles.titleText}>Time</Text>
+            <Text style={styles.dataValue}>
+              {clockify().displayHours}:{clockify().displayMins}:
               {clockify().displaySecs}
             </Text>
           </View>
           <View style={[styles.cell, styles.rightBottom]}>
+            <Text style={styles.titleText}>Altitude</Text>
             {isLoading ? (
-              <Text style={styles.dataText}>Loading altitude data...</Text>
+              <Text style={styles.dataValue}>Loading altitude data...</Text>
             ) : altitude ? (
-              <Text style={styles.dataText}>Altitude: {altitude} m</Text>
+              <Text style={styles.dataValue}>{altitude} m</Text>
             ) : (
-              <Text style={styles.dataText}>
+              <Text style={styles.dataValue}>
                 Failed to retrieve altitude data.
               </Text>
             )}
@@ -679,23 +629,6 @@ const styles = StyleSheet.create({
     width: 50,
     padding: 5,
   },
-  dashBoardContainer: {
-    position: 'absolute',
-    top: '10%',
-    width: '90%',
-    marginHorizontal: '5%',
-    backgroundColor: 'white',
-    borderRadius: 10,
-    padding: 10,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
-  },
   tracktButton: {
     position: 'absolute',
     bottom: '5%',
@@ -707,5 +640,57 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: '5%',
     left: '5%',
+  },
+  dashBoardContainer: {
+    position: 'absolute',
+    top: '10%',
+    width: '90%',
+    marginHorizontal: '5%',
+    backgroundColor: 'rgba(255, 255, 255, 0.8)',
+    borderRadius: 10,
+    padding: 8,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.5,
+    shadowRadius: 10,
+    elevation: 10,
+    borderWidth: 1,
+    borderColor: '#1E1E1E',
+  },
+  row: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    width: '100%',
+  },
+  cell: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    alignItems: 'center', // 水平居中
+    justifyContent: 'center', // 垂直居中
+  },
+  dataText: {
+    color: '#1E1E1E',
+    fontSize: 10,
+    fontWeight: 'bold',
+    marginBottom: 5,
+    textAlign: 'center', // 文本水平居中
+  },
+  dataValue: {
+    color: '#1E1E1E',
+    fontSize: 18,
+    fontWeight: 'bold',
+    textAlign: 'center', // 文本水平居中
+  },
+  titleText: {
+    color: '#6FB1FC',
+    fontSize: 12,
+    fontWeight: 'bold',
+    marginBottom: 10,
+    textAlign: 'center', // 文本水平居中
   },
 });

@@ -3,16 +3,19 @@ import {View, Text, Image, Pressable} from 'react-native';
 import styles from './styles.js';
 import {useNavigation} from '@react-navigation/native';
 import MapView, { Geojson } from 'react-native-maps';
+import patrolRoutes from '../../Assets/data/patrolRoutes.js';
 
 
 const DetailedPost = props => {
   const post = props.post;
+  
   const navigation = useNavigation();
 
   const goToPostPage = () => {
-    navigation.navigate('PostPage', {postId: post.id});
+    // navigation.navigate('PostPage', {postId: post.id});
   };
 
+ 
   return (
     <Pressable onPress={goToPostPage} style={styles.container}>
       <Image style={styles.image} source={{uri: post.image}} />
@@ -35,16 +38,19 @@ const DetailedPost = props => {
             latitudeDelta: 0.0922,
             longitudeDelta: 0.0421,
         }}
-        
+
         >
-          <Geojson
-            geojson={post.geojson}
-            strokeColor="red"
-            strokeWidth={2}
-          ></Geojson>
+        <Geojson
+          geojson={post.geojson}
+          strokeColor="red"
+          fillColor="green"
+          strokeWidth={2}
+        ></Geojson>
+        
           
           </MapView> */}
-          <Text>{post.id}</Text>
+          <Text>post</Text>
+         
          
         </View>
         <Text style={styles.description}>Route Description:</Text>

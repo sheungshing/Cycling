@@ -8,12 +8,14 @@ const RouteCarousel = (props) => {
   const post = props.post;
   const width = useWindowDimensions().width;
 
+  
   // 使用 useNavigation hook 获取 navigation 对象
   const navigation = useNavigation();
 
   // 跳转到帖子详情页面
   const goToPostPage = () => {
     navigation.navigate('Post', {postId: post.id});
+   console.log(post.geojson.features[0].geometry.coordinates)
   }
 
   return (
