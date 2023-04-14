@@ -15,7 +15,7 @@ const RouteCarousel = (props) => {
   // 跳转到帖子详情页面
   const goToPostPage = () => {
     navigation.navigate('Post', {postId: post.id});
-   console.log(post.geojson.features[0].geometry.coordinates)
+  // console.log(post.geojson.features[0].geometry.coordinates)
   }
 
   return (
