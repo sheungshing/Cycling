@@ -125,57 +125,51 @@ const Profile = () => {
   return (
 
     <SafeAreaView style={styles.container}>
-      <View style={styles.userInfoSection}>
-        <View style={{flexDirection: 'row', marginTop: 15}}> 
-          <Avatar.Image 
-            source={{
-              uri: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Circle-icons-bike.svg/2048px-Circle-icons-bike.svg.png',
-            }}
-            size={80}
-          />
-          <View style={{marginLeft: 20}}>
-            <Title style={[styles.title, {
-              marginTop:5,
-              marginBottom: 5,
-            }]}>{name}</Title>
-            <Caption style={styles.nickname}>{nickname}</Caption>
-          </View>
-        </View>
+  <View style={styles.userInfoSection}>
+    <View style={{flexDirection: 'row', marginTop: 15}}> 
+      <Avatar.Image 
+        source={{uri: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Circle-icons-bike.svg/2048px-Circle-icons-bike.svg.png'}}
+        size={80}
+      />
+      <View style={{marginLeft: 20}}>
+        <Title style={[styles.title, {marginTop:5, marginBottom: 5}]}>{name}</Title>
+        <Caption style={styles.nickname}>{nickname}</Caption>
       </View>
+    </View>
+  </View>
 
-      <View style={styles.userInfoSection}>
-        <View style={styles.row}>
-          <Icon name="map-marker-radius" color="black" size={20}/>
-          <Text style={{color:"black", fontWeight: '900', marginLeft: 30}}>{city}, {country}</Text>
-        </View>
-        <View style={styles.row}>
-          <Icon name="phone" color="red" size={20}/>
-          <Text style={{color:"red", fontWeight: '900', marginLeft: 30}}>SOS: 2762 2055</Text>
-        </View>
-      </View>
+  <View style={styles.userInfoSection}>
+    <View style={styles.row}>
+      <Icon name="map-marker-radius" color="black" size={20}/>
+      <Text style={{color:"black", fontWeight: '900', marginLeft: 30}}>{city}, {country}</Text>
+    </View>
+    <View style={styles.row}>
+      <Icon name="phone" color="red" size={20}/>
+      <Text style={{color:"red", fontWeight: '900', marginLeft: 30}}>SOS: 2762 2055</Text>
+    </View>
+  </View>
 
-      <View style={styles.infoBoxWrapper}>
-          <View style={[styles.infoBox, {
-            borderRightColor: '#dddddd',
-            borderRightWidth: 1
-          }]}>
-            <Title style={{fontWeight:'bold'}}>{tRide/1000} km</Title>
-            <Caption>Total Hike</Caption>
-          </View>
-          <View style={styles.infoBox}>
-            <Title style={{fontWeight:'bold'}}>{routeCompleted}</Title>
-            <Caption>Route Completed</Caption>
-          </View>
-      </View>
+  <View style={styles.infoBoxWrapper}>
+    <View style={[styles.infoBox, {borderRightColor: '#dddddd', borderRightWidth: 1}]}>
+    <Title style={{fontWeight:'bold'}}>{(tRide/1000).toFixed(3)} km</Title>
+      <Caption>Total Hike</Caption>
+    </View>
+    <View style={styles.infoBox}>
+      <Title style={{fontWeight:'bold'}}>{routeCompleted}</Title>
+      <Caption>Route Completed</Caption>
+    </View>
+  </View>
 
-      <View style={{flex:1}}>
-        <FlatList
-          ref={flatlist}
-          data={hikeDetails}
-          renderItem={({item}) => <ProfileScroll data={item}/>}
-        />
-      </View>   
-    </SafeAreaView>
+
+  <View style={{flex: 1}}>
+    <FlatList
+      ref={flatlist}
+      data={hikeDetails}
+      renderItem={({item}) => <ProfileScroll data={item}/>}
+    />
+  </View>
+
+</SafeAreaView>
   );
 };
 

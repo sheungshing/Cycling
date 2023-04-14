@@ -6,18 +6,11 @@ import MapViewDirections from "react-native-maps-directions";
 const GOOGLE_MAPS_APIKEY = 'AIzaSyANR3h2G1QwhlFCTlyEvR_gDeQNOJcLeCU';
 
 const RouteMap = ({ origin, destination }) => {
-    const [decodedPoints, setDecodedPoints] = useState([])
+    const [decodedPoints, setDecodedPoints] = useState([]);
+    const [duration, setDuration] = useState('');
+    const [distance, setDistance] = useState('');
 
-    // console.log(origin)
-    // const originLoc = {
-    //     latitude: origin.details.geometry.location.lat,
-    //     longitude: origin.details.geometry.location.lng,
-    //   };
     
-    //   const destinationLoc = {
-    //     latitude: destination.details.geometry.location.lat,
-    //     longitude: destination.details.geometry.location.lng,
-    //   };
     useEffect(() => {
         const url = `https://maps.googleapis.com/maps/api/directions/json?origin=${origin.details.geometry.location.lat},${origin.details.geometry.location.lng}&destination=${destination.details.geometry.location.lat},${destination.details.geometry.location.lng}&mode=walking&key=${GOOGLE_MAPS_APIKEY}`;
     
@@ -26,6 +19,11 @@ const RouteMap = ({ origin, destination }) => {
           .then(data => {
             const points = data.routes[0].overview_polyline.points;
             setDecodedPoints(decodePolyline(points));
+            const duration = data.routes[0].legs[0].duration.text;
+            const distance = data.routes[0].legs[0].distance.text;
+            setDistance(distance);
+            setDuration(duration);
+            //console.log('Estimated walking time:', duration, distance);
           });
       }, [origin, destination]);
     
@@ -38,54 +36,51 @@ const RouteMap = ({ origin, destination }) => {
       }
 
     return (
-
-        <MapView
-            style={{ width: '100%', height: '100%' }}
-            initialRegion={{
-                latitude: origin.details.geometry.location.lat,
-                longitude: origin.details.geometry.location.lng,
-                latitudeDelta: 0.0922,
-                longitudeDelta: 0.0421,
-            }}
-            showsUserLocation={true}
-        >
-            {/* <MapViewDirections
-                origin={originLoc}
-                destination={destinationLoc}
-                apikey={GOOGLE_MAPS_APIKEY}
-                strokeWidth={3}
-                strokeColor="hotpink"
-                // mode="BICYCLING"
-               //timePrecision="now"
-            /> */}
-            <Marker  
-                coordinate={{ latitude: origin.details.geometry.location.lat, longitude: origin.details.geometry.location.lng }}
-               
-                >
-            </Marker>
-
-            <Marker  
-                coordinate={{ latitude: destination.details.geometry.location.lat, longitude: destination.details.geometry.location.lng }}
+        <View style ={{width: '100%', height: '100%' }}>
+            <View style={{ backgroundColor: '#fff', padding: 10}}>
+                <Text>Estimated walking time: {duration}</Text>
+                <Text>Distance: {distance}</Text>
+            </View>
+            <MapView
+                style={{ width: '100%', height: '100%' }}
+                initialRegion={{
+                    latitude: origin.details.geometry.location.lat,
+                    longitude: origin.details.geometry.location.lng,
+                    latitudeDelta: 0.0922,
+                    longitudeDelta: 0.0421,
+                }}
+                showsUserLocation={true}
+            >
+                <Marker  
+                    coordinate={{ latitude: origin.details.geometry.location.lat, longitude: origin.details.geometry.location.lng }}
                 
-                >
-            </Marker>
+                    >
+                </Marker>
 
-            <Polyline
-                coordinates={decodedPoints}
-                strokeColor="#000" // fallback for when `strokeColors` is not supported by the map-provider
-                strokeColors={[
-                    '#7F0000',
-                    '#00000000', // no color, creates a "long" gradient between the previous and next coordinate
-                    '#B24112',
-                    '#E5845C',
-                    '#238C23',
-                    '#7F0000'
-                ]}
-                strokeWidth={3}
-            />
+                <Marker  
+                    coordinate={{ latitude: destination.details.geometry.location.lat, longitude: destination.details.geometry.location.lng }}
+                    
+                    >
+                </Marker>
 
-        </MapView>
+                <Polyline
+                    coordinates={decodedPoints}
+                    strokeColor="#000" // fallback for when `strokeColors` is not supported by the map-provider
+                    strokeColors={[
+                        '#7F0000',
+                        '#00000000', // no color, creates a "long" gradient between the previous and next coordinate
+                        '#B24112',
+                        '#E5845C',
+                        '#238C23',
+                        '#7F0000'
+                    ]}
+                    strokeWidth={3}
+                />
 
+            </MapView>
+            
+            
+        </View>
     );
 }
 

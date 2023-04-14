@@ -2,6 +2,8 @@ import React from 'react';
 import {View, Text, Image, Pressable} from 'react-native';
 import styles from './styles.js';
 import {useNavigation} from '@react-navigation/native';
+import MapView, { Geojson } from 'react-native-maps';
+
 
 const DetailedPost = props => {
   const post = props.post;
@@ -24,7 +26,26 @@ const DetailedPost = props => {
           Duration: {post.duration}hr(s) | Length: {post.kilometers}km
         </Text>
         <View style={styles.mapContainer}>
-          {/* Add a map or graphic of the route */}
+          {/* <MapView
+           style={{ width: '100%', height: '100%' }}
+           showsUserLocation={true}
+           initialRegion={{
+            latitude: post.coordinate.latitude,
+            longitude: post.coordinate.longitude,
+            latitudeDelta: 0.0922,
+            longitudeDelta: 0.0421,
+        }}
+        
+        >
+          <Geojson
+            geojson={post.geojson}
+            strokeColor="red"
+            strokeWidth={2}
+          ></Geojson>
+          
+          </MapView> */}
+          <Text>{post.id}</Text>
+         
         </View>
         <Text style={styles.description}>Route Description:</Text>
         <Text style={styles.descriptionText}>
