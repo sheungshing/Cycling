@@ -401,8 +401,13 @@ const TrackingMap = props => {
       yourDate = new Date(yourDate.getTime() - offset * 60 * 1000);
       const date = yourDate.toISOString().split('T')[0];
       const time = yourDate.toISOString().split('T')[1].split('.')[0];
-      const period =  clockify().displayHours.toString()+':'+clockify().displayMins.toString()+':'+clockify().displaySecs.toString()
-      console.log('time: ' + period)
+      const period =
+        clockify().displayHours.toString() +
+        ':' +
+        clockify().displayMins.toString() +
+        ':' +
+        clockify().displaySecs.toString();
+      console.log('time: ' + period);
       if (rideDetails !== null) {
         let objects = JSON.parse(rideDetails);
         let tempDetail = {
@@ -468,7 +473,7 @@ const TrackingMap = props => {
         //id="weather container"
         style={{
           position: 'absolute',
-          top: '50%',
+          top: '30%',
           right: '1%',
           backgroundColor: 'rgba(0, 0, 0, 0.2)',
           opacity: 0.8,
@@ -476,11 +481,13 @@ const TrackingMap = props => {
         }}>
         {weatherData && (
           <Image
-            style={{width: 50, height: 50}}
+            style={{width: 50, height: 40}}
             source={{uri: `${weatherData.icon}`}}
           />
         )}
-        <Text>{weatherData ? Math.floor(weatherData.temp) + 'ºC' : 0}</Text>
+        <Text style={{color: 'darkblue', textAlign: 'center'}}>
+          {weatherData ? Math.floor(weatherData.temp) + 'ºC' : 0}
+        </Text>
       </View>
 
       <View
@@ -550,7 +557,7 @@ const TrackingMap = props => {
             </View>
             <View style={[styles.cell, styles.rightTop]}>
               <Text style={styles.titleText}>Distance</Text>
-              <Text style={styles.dataValue}>{distance} m</Text>
+              <Text style={styles.dataValue}>{distance} km</Text>
             </View>
           </View>
           <View style={styles.row}>
@@ -688,7 +695,7 @@ const styles = StyleSheet.create({
   },
   titleText: {
     color: '#6FB1FC',
-    fontSize: 12,
+    fontSize: 13,
     fontWeight: 'bold',
     marginBottom: 10,
     textAlign: 'center', // 文本水平居中

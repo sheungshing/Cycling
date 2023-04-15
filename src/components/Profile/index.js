@@ -128,7 +128,7 @@ const Profile = () => {
   <View style={styles.userInfoSection}>
     <View style={{flexDirection: 'row', marginTop: 15}}> 
       <Avatar.Image 
-        source={{uri: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Circle-icons-bike.svg/2048px-Circle-icons-bike.svg.png'}}
+        source={{uri: 'https://media.istockphoto.com/id/1203591390/vector/hiking-icon-vector-isolated-on-white.jpg?s=612x612&w=0&k=20&c=3SaYU_Yi1P2eLFO9i_SyKuu0OxymIi6GXfVjegFPv_E='}}
         size={80}
       />
       <View style={{marginLeft: 20}}>
@@ -144,8 +144,8 @@ const Profile = () => {
       <Text style={{color:"black", fontWeight: '900', marginLeft: 30}}>{city}, {country}</Text>
     </View>
     <View style={styles.row}>
-      <Icon name="phone" color="red" size={20}/>
-      <Text style={{color:"red", fontWeight: '900', marginLeft: 30}}>SOS: 2762 2055</Text>
+      <Icon name="phone" color="black" size={20}/>
+      <Text style={{color:"lightblue", fontWeight: '900', marginLeft: 30}}>1234 5678</Text>
     </View>
   </View>
 
