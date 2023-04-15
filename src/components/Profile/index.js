@@ -151,7 +151,7 @@ const Profile = () => {
 
   <View style={styles.infoBoxWrapper}>
     <View style={[styles.infoBox, {borderRightColor: '#dddddd', borderRightWidth: 1}]}>
-    <Title style={{fontWeight:'bold'}}>{(tRide/1000).toFixed(3)} km</Title>
+    <Title style={{fontWeight:'bold'}}>{tRide} km</Title>
       <Caption>Total Hike</Caption>
     </View>
     <View style={styles.infoBox}>

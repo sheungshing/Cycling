@@ -12,9 +12,9 @@ const ProfileScroll = props => {
       </View>
       <View style={styles.infoContainer}>
         <Text style={styles.infoText}>Start time: {data.time}</Text>
-        <Text style={styles.infoText}>Period: {data.cal}</Text>
+        <Text style={styles.infoText}>Walking Time: {data.cal}</Text>
         <Text style={styles.infoText}>Distance: {data.dis} km</Text>
-        <Text style={styles.infoText}>Avg Speed: {data.spe} km/h</Text>
+        <Text style={styles.infoText}>Avg Speed: {data.spe} m/s</Text>
       </View>
     </View>
   );
