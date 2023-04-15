@@ -59,7 +59,7 @@ const App = () =>{
       }).then((value)=>{
         if(value === null){
         //  alert("Please restart this application after allowing all permissions");
-        console.log(Please restart this application after allowing all permissions)
+        console.log('Please restart this application after allowing all permissions')
         }
         AsyncStorage.setItem('@alert', '1');
       })
