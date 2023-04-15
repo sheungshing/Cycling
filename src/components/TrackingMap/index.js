@@ -50,31 +50,6 @@ const TrackingMap = props => {
   LogBox.ignoreAllLogs(); //Ignore all log notifications
   const navigation = useNavigation();
   const [des, setDes] = useState(null);
-  // const [Toilets, setToilets] = useState(null);
-  // const [BlackSpots, setBlackSpots] = useState(null);
-  // const navigation = useNavigation();
-  // if(props)
-  //   console.log(props);
-  // useEffect(() => {
-  //   // if(props)
-  //     console.log(props);
-  // }, [props]);
-  const updateDestination = savedData => {
-    console.log('success!');
-    setDes(savedData);
-  };
-
-  // useEffect(() => {
-  //   DataStore.query(Toilet).then(results => {
-  //     setToilets(results);
-  //   });
-  // }, []);
-
-  // useEffect(() => {
-  //   DataStore.query(BlackSpot).then(results => {
-  //     setBlackSpots(results);
-  //   });
-  // }, []);
 
   useEffect(() => {
     if (initLocation)
@@ -83,7 +58,6 @@ const TrackingMap = props => {
     return;
   }, [des]);
 
-  //console.log(temp);
   let initialRegion = {
     latitude: 22.41707,
     longitude: 114.22714,
@@ -157,14 +131,19 @@ const TrackingMap = props => {
   const [isLoading, setIsLoading] = useState(false);
 
   const getAltitude = async (latitude, longitude, apiKey) => {
+    
     const url = `https://maps.googleapis.com/maps/api/elevation/json?locations=${latitude},${longitude}&key=${apiKey}`;
+    console.log(url);
     const response = await fetch(url);
     const data = await response.json();
 
     if (data.status === 'OK') {
       const altitude = data.results[0].elevation;
       console.log('Altitude: ' + altitude);
-      return altitude;
+      setAltitude(Math.floor(altitude));
+      console.log(Math.floor(altitude));
+      setIsLoading(false);
+      return (Math.floor(altitude));
     } else {
       throw new Error(`Error getting elevation data: ${data.status}`);
     }
@@ -198,14 +177,15 @@ const TrackingMap = props => {
               speedStr.substring(0, speedStr.length - (speedStr.length - 5)),
             );
             // getAltitude(tempPosition.latitude, tempPosition.longitude, 'AIzaSyDXM1OETGAv7cr2AXBRf1RwpTiDAOhuJDQ').then(altitude => {setAltitude(Math.floor(altitude))
-
+            
             const tempAltitude = getAltitude(
               tempPosition.latitude,
               tempPosition.longitude,
               'AIzaSyDXM1OETGAv7cr2AXBRf1RwpTiDAOhuJDQ',
             );
+            setAltitude(Math.floor(altitude));
             console.log(tempAltitude);
-            //setAltitude(Math.floor(tempAltitude));
+            
             // getAltitude(tempPosition.latitude, tempPosition.longitude, 'AIzaSyDXM1OETGAv7cr2AXBRf1RwpTiDAOhuJDQ').then(altitude => {
             //   console.log(altitude)
             //   console.log('1')
@@ -247,7 +227,7 @@ const TrackingMap = props => {
       setDistance(0);
       setCalories(0);
       setTCalories([]);
-      setShowTCalories(0);
+      setAltitude(0);
       ReactNativeForegroundService.remove_all_tasks();
       ReactNativeForegroundService.stop();
       setStarted(false);
