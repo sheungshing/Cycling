@@ -84,19 +84,14 @@ const TrackingMap = props => {
         latitude: BSArray[j].latitude,
         longitude: BSArray[j].longitude,
       };
-      //console.log(point);
-      //console.log(currentPosition);
       const distances = geolib.getDistance(currentPosition, point);
-      //console.log(BSArray[j].name);
-      //console.log(BSArray);
       if (distances < 100 && BSArray[j].alerted == false) {
         //alert
         Alert.alert('Warning! Danger Ahead!', 'You are near ' + BSArray[j].name + '! ' + 
-        'Beware of the surroundings.'+ 'Stay off the edge.', [
+        'Beware of the surroundings.\n'+ 'Stay off the edge.', [
           {text: 'OK'},
         ]);
-        BSArray[j].alerted = true; //Alerted = true
-        //console.log(BSArray);
+        BSArray[j].alerted = true; 
       }
     }
   };
