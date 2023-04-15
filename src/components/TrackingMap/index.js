@@ -35,14 +35,10 @@ import {useNavigation} from '@react-navigation/native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 //import data
-//import toilets from '../../Assets/data/toilets';
-
 import {DataStore} from 'aws-amplify';
-//import {Toilet, BlackSpot} from '../../models';
 
 //import AsyncStorage from '@react-native-async-storage/async-storage';
 import {LogBox} from 'react-native';
-
 import blackspots from '../../Assets/data/blackspots';
 
 const TrackingMap = props => {
@@ -95,7 +91,8 @@ const TrackingMap = props => {
       //console.log(BSArray);
       if (distances < 100 && BSArray[j].alerted == false) {
         //alert
-        Alert.alert('Warning', `You are near ${BSArray[j].name}!`, [
+        Alert.alert('Warning! Danger Ahead!', 'You are near ' + BSArray[j].name + '! ' + 
+        'Beware of the surroundings.'+ 'Stay off the edge.', [
           {text: 'OK'},
         ]);
         BSArray[j].alerted = true; //Alerted = true
