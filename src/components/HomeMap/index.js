@@ -22,10 +22,7 @@ const HomeMap = () => {
                 longitudeDelta: 0.0421,
             }}
         >
-            <Marker
-                coordinate={{ latitude: 22.417070, longitude: 114.227140 }}
-            >
-            </Marker>
+            
 
             <Polyline
                 coordinates={[

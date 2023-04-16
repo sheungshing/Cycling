@@ -34,7 +34,7 @@ const Router = () => {
                     name={"Post"}
                     component={PostScreen}
                     options={{
-                        title:'Crime Sites'
+                        title:'Route Details'
                     }} />
 
             </Stack.Navigator>

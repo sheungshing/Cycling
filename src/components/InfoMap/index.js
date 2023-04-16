@@ -14,8 +14,8 @@ import AntDesign from 'react-native-vector-icons/AntDesign'
 const InfoMap = () => {
 
     let initialRegion = {
-        latitude: 22.417070,
-        longitude: 114.227140,
+        latitude: 22.3363998,
+        longitude: 114.2632715,
         latitudeDelta: 0.0922,
         longitudeDelta: 0.0421,
       }
@@ -77,12 +77,6 @@ const InfoMap = () => {
         //console.warn(index);
 
         map.current.animateToRegion(region);
-
-
-
-
-
-
 
     }, [selectedPlaceId])
 

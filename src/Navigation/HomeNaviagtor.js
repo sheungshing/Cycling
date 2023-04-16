@@ -1,23 +1,22 @@
-//no need
 import React from 'react';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
+import HomeScreen from '../screens/HomeScreen';
 import PatrolMapScreen from '../screens/PatrolMapScreen';
-import Profile from '../components/Profile';
 
 const Tab = createMaterialTopTabNavigator();
 
-const InfoTabNavigator = () => {
-  
-  return (
-    <Tab.Navigator
+const HomeTabNavigator = () =>{
+
+    return(
+        <Tab.Navigator
       screenOptions={{
         tabBarScrollEnabled: true,
         swipeEnabled: false,
       }}>
+      <Tab.Screen name={'Search'} component={HomeScreen} />
       <Tab.Screen name={'Routes'} component={PatrolMapScreen} />
-      <Tab.Screen name={'User'} component={Profile} />
     </Tab.Navigator>
-  );
-};
+    )
+}
 
-export default InfoTabNavigator;
+export default HomeTabNavigator;

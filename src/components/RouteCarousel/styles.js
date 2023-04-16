@@ -3,9 +3,7 @@ import { StyleSheet } from 'react-native';
 const styles = StyleSheet.create({
   container: {
     height: 120,
-    padding: 5,
-
-    
+    padding: 5,   
   },
   innerContainer: {
     flexDirection: 'row',
@@ -28,38 +26,34 @@ const styles = StyleSheet.create({
     
   },
 
-  // bedrooms: {
-  //   marginVertical: 10,
-  //   color: '#5b5b5b',
-  // },
   location: {
     fontSize: 17,
-    // marginVertical: 1,
+    marginHorizontal: 3,
     color: 'red',
+    marginBottom: 3,
+  },
+  route: {
+    /*fontSize: 14,
+    marginHorizontal: 3,
+    marginBottom: 3,*/
+    marginHorizontal: 9
   },
 
-  crimeNumber: {
-    fontSize: 15,
-    marginVertical: 10,
+  distance: {
+    /*fontSize: 14,
+    marginHorizontal: 3,
+    marginBottom: 3,*/
+    marginHorizontal: 9
   },
-  button:{
-    marginBottom:1,
-    marginRight:2,
-    height:35,
-    width:80,
-    // alignContent:'center',
-  }
-  // oldPrice: {
-  //   color: '#5b5b5b',
-  //   textDecorationLine: 'line-through',
-  // },
-  // price: {
-  //   fontWeight: 'bold',
-  // },
-  // totalPrice: {
-  //   color: '#5b5b5b',
-  //   textDecorationLine: 'underline',
-  // }
+
+  duration: {
+    /*fontSize: 14,
+    marginHorizontal: 3,
+    marginBottom: 3,*/
+    marginHorizontal: 9
+  },
+  
+  
 });
 
 export default styles;
