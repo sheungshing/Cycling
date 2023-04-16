@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
     height: 200,
     resizeMode: 'cover',
     borderRadius: 10,
-    marginBottom: 10,
+    marginBottom: 2,
   },
   infoContainer: {
     marginLeft: 10,
@@ -28,8 +28,10 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   location: {
-    fontSize: 16,
+    fontSize: 18,
     marginBottom: 5,
+    textAlign: 'center',
+    fontWeight: 'bold',
   },
   difficulty: {
     fontSize: 16,

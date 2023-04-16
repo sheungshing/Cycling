@@ -31,12 +31,14 @@ const DetailedPost = props => {
 
   return (
     <Pressable onPress={goToPostPage} style={styles.container}>
+      <Text style={styles.location}>
+          {post.division}, {post.district}
+        </Text>
+        <Text>{''}</Text>
       <Image style={styles.image} source={{uri: post.image}} />
       <View style={styles.infoContainer}>
         <Text style={styles.title}>{post.name}</Text>
-        <Text style={styles.location}>
-          {post.division}, {post.district}
-        </Text>
+        
         <Text style={styles.difficulty}>Difficulty: {post.difficulty}</Text>
         <Text style={styles.duration}>
           Duration: {post.duration}hr(s) | Length: {post.kilometers}km

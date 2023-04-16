@@ -280,7 +280,7 @@ export default [
             latitude: 22.426675,
             longitude: 114.213068
         },
-        image: 'https://upload.wikimedia.org/wikipedia/commons/1/18/HKUST_campus_view_looking_from_above.jpg',
+        image: 'https://www.cathaypacific.com/content/dam/focal-point/digital-library/global-marketing/hong-kong-great-outdoor/hong-kong-outdoor_dragons-back-3.renditionimage.900.600.png',
         district: 'Sai Kung',
         division: 'Polam To UST',
         description: 'Have you ever thought hiking to school? This route is mostly shaded, Located in the hills above Po Lam in Sai Kung, it’s one of the most beginner-friendly hikes that makes for a good half-day trip. Of course, you can make it longer by adding on a nearby hike – Pak Shui Wun Beach',

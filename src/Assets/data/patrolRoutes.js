@@ -278,7 +278,7 @@ export default [
         strokeColor: 'red',
         distance: 2.5,
         duration: 1.25,
-        image: 'https://upload.wikimedia.org/wikipedia/commons/1/18/HKUST_campus_view_looking_from_above.jpg',
+        image: 'https://www.cathaypacific.com/content/dam/focal-point/digital-library/global-marketing/hong-kong-great-outdoor/hong-kong-outdoor_dragons-back-3.renditionimage.900.600.png',
         coordinate: {
             latitude: 22.3226191,
             longitude: 114.260475
