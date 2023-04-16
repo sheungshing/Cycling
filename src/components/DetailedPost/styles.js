@@ -59,6 +59,12 @@ const styles = StyleSheet.create({
     marginBottom: 5,
     lineHeight: 20,
   },
+  descriptionTexts: {
+    fontSize: 14,
+    marginBottom: 5,
+    lineHeight: 20,
+    color:'red',
+  },
 });
 
 

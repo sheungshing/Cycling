@@ -41,6 +41,7 @@ const DetailedPost = props => {
         <Text style={styles.duration}>
           Duration: {post.duration}hr(s) | Length: {post.kilometers}km
         </Text>
+        {/*
         <View style={styles.mapContainer}>
           <MapView
             style={{width: '100%', height: '100%'}}
@@ -59,14 +60,19 @@ const DetailedPost = props => {
               strokeWidth={2}></Geojson>
           </MapView>
         </View>
+
+        */}
         <Text style={styles.description}>Route Description:</Text>
         <Text style={styles.descriptionText}>
+          {post.description}
+        </Text>
+        <Text style={styles.descriptionTexts}>
           - Start at {post.startPoint} and follow the trail to {post.endPoint}.
         </Text>
-        <Text style={styles.descriptionText}>
+        <Text style={styles.descriptionTexts}>
           - Along the way, you'll see {post.highlights} and {post.scenicViews}.
         </Text>
-        <Text style={styles.descriptionText}>
+        <Text style={styles.descriptionTexts}>
           - Be sure to bring plenty of water and wear appropriate hiking gear.
         </Text>
       </View>

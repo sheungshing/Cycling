@@ -12,6 +12,10 @@ export default [
         kilometers: 4.2,
         duration: 2.5,
         difficulty: '3/5',
+        highlights:'spectecular 360 degrees view of Kowloon Peninsula',
+        scenicViews:'able to access to the Lions head',
+        startPoint: 'Tsz Wan Shan',
+        endPoint: 'Hung Mui Kuk, Sha Tin',
         altitudeGraph: 111,
         geojson: {
             "features": [
@@ -283,6 +287,10 @@ export default [
         kilometers: 2.5,
         duration: 1.25,
         difficulty: '1/5',
+        highlights:'Pak Shui Wun Beach',
+        scenicViews:'HKUST',
+        startPoint: 'Polam MTR station',
+        endPoint: 'North Gate, HKUST',
         altitudeGraph: 111,
         geojson: {
             "features": [
@@ -475,6 +483,10 @@ export default [
         kilometers: 6.4,
         duration: 3,
         difficulty: '3/5',
+        highlights:'views of Hills/water and Clear Water Bay',
+        scenicViews:'ancient rock carving',
+        startPoint: 'Tai Au Mun',
+        endPoint: 'end at the origin',
         altitudeGraph: 111,
         geojson: {
             "features": [
